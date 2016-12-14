@@ -1,0 +1,30 @@
+<ion-tabs class="tabs-striped tabs-color-positive">
+
+    <ion-tab icon="ion-search" on-select="onTabSelected()"
+             on-deselect="onTabDeselected()" href="#/tab/list">
+        <ion-nav-view name="tab-search"></ion-nav-view>
+
+    </ion-tab>
+    <ion-tab icon="ion-chatbubble-working" on-select="onTabSelected()"
+             on-deselect="onTabDeselected()" href="#/tab/chat">
+
+            <ion-nav-view name="tab-chat"></ion-nav-view>
+
+    </ion-tab>
+
+    <ion-tab icon="ion-images" on-select="onTabSelected()"
+             on-deselect="onTabDeselected()" href="#/tab/album">
+
+            <ion-nav-view name="tab-album"></ion-nav-view>
+
+
+    </ion-tab>
+    <ion-tab icon="ion-gear-a" on-select="onTabSelected()"
+             on-deselect="onTabDeselected()" href="#/tab/setting">
+
+            <ion-nav-view name="tab-setting"></ion-nav-view>
+
+
+    </ion-tab>
+
+</ion-tabs>
