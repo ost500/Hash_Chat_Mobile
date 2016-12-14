@@ -143,7 +143,7 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
     })
     .controller('SettingCtrl', function ($scope, $location) {
         console.log($location.url());
-        
+
     })
 
     .run(function ($ionicPlatform) {
