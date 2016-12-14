@@ -1,19 +1,42 @@
-<ion-view view-title="할 일 입력">
+<ion-view view-title="할 일 입력" ng-controller="AlbumCtrl">
+
     <ion-content>
+        <ion-refresher
+                pulling-text="PULLPULLPULLPULL"
+                on-refresh="loadNew()">
+        </ion-refresher>
 
-        <div class="row">
+        <div class="list">
+            <div class="item item-thumbnail-left">
+            <!--<div class="item item-thumbnail-left" ng-repeat="movie in movies">-->
+                <img ng-src="https://cdn3.iconfinder.com/data/icons/multimedia/100/play_movie_3-512.png">
+                <h2>abcd</h2>
+                <h2>abcd</h2>
+                <p>abcd</p>
 
-            <div class="image col col-33">
-                <img class="album-img" src="img/ionic.png">
             </div>
-            <div class="image col col-33">
-                <img src="img/ionic.png">
-            </div>
-            <div class="image col col-33">
-                <img src="img/ionic.png">
-            </div>
+            <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="moreDataCanBeLoaded">
+            </ion-infinite-scroll>
         </div>
-
-
     </ion-content>
+
+
+    <!---->
+    <!--<ion-content>-->
+
+    <!--<div class="row">-->
+
+    <!--<div class="image col col-33">-->
+    <!--<img class="album-img" src="img/ionic.png">-->
+    <!--</div>-->
+    <!--<div class="image col col-33">-->
+    <!--<img src="img/ionic.png">-->
+    <!--</div>-->
+    <!--<div class="image col col-33">-->
+    <!--<img src="img/ionic.png">-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+    <!--</ion-content>-->
 </ion-view>
