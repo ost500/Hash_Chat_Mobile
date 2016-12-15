@@ -7,12 +7,14 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
+
         $ionicConfigProvider.tabs.position('top');
 
         $stateProvider.state('tab', {
                 url: "/tab",
                 abstract: true,
-                templateUrl: "templates/tabs.html"
+                templateUrl: "templates/tabs.html",
+                controller: 'SettingCtrl'
             })
             .state('tab.search', {
                 url: '/list',
@@ -56,6 +58,18 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
                     }
                 }
 
+            })
+
+
+            .state('tab.login', {
+                url: '/login',
+                views: {
+                    'tab-login': {
+                        templateUrl: 'templates/login.html',
+                        controller: 'LoginCtrl'
+                    }
+                }
+
             });
 
         // $stateProvider.state('edit', {
@@ -77,6 +91,18 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
         // });
 
         $urlRouterProvider.otherwise('/tab/list');
+    })
+
+    .controller('LoginCtrl', function ($scope, $location, $ionicHistory) {
+        $scope.myGoBack = function () {
+            console.log("go back");
+            $ionicHistory.goBack();
+        };
+
+        console.log($location.url());
+        if ($location.url() == '/login') {
+            $scope.now = "login";
+        }
     })
 
     .controller('FootCtrl', function ($scope, $ionicTabsDelegate) {
@@ -141,10 +167,35 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
 
         }
     })
+    .controller('MyCtrl', function ($scope, $location) {
+        $scope.myGoBack = function () {
+
+            $location.path('/tab/setting');
+
+        };
+    })
+
+
     .controller('SettingCtrl', function ($scope, $location) {
+
+        $scope.loadMore = function loadList() {
+            console.log("hihihihi");
+            $scope.now = false;
+        }
+
+        $scope.now = true;
+
         console.log($location.url());
+        if ($location.url() == '/setting') {
+            $scope.now = true;
+        }
+
+        if ($location.url() == '/login') {
+            $scope.now = false;
+        }
 
     })
+
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -162,4 +213,4 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
                 StatusBar.styleDefault();
             }
         });
-    })
+    });
