@@ -1,4 +1,4 @@
-<ion-view view-title="할 일 입력" ng-controller="AlbumCtrl">
+<ion-view view-title="할 일 입력" ng-controller="AlbumDetailCtrl">
 
     <ion-content>
         <ion-refresher
@@ -6,32 +6,7 @@
                 on-refresh="loadNew()">
         </ion-refresher>
 
-
-        <div ng-click="album_detail()" class="list card">
-
-            <div class="item item-avatar">
-                <img src="img/ionic.png">
-                <h2>Marty McFly</h2>
-                <p>November 05, 1955</p>
-            </div>
-
-            <div class="item item-body">
-                <img class="full-image" src="img/ionic.png">
-                <p>
-                    This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-                    the content is from a card-body consisting of an image and paragraph text. The footer
-                    consists of tabs, icons aligned left, within the card-footer.
-                </p>
-                <p>
-                    <a href="#" class="subdued">1 Like</a>
-                    <a href="#" class="subdued">5 Comments</a>
-                </p>
-            </div>
-
-        </div>
-
-
-        <div class="list card">
+        <div class="list">
 
             <div class="item item-avatar">
                 <img src="img/ionic.png">
@@ -47,12 +22,35 @@
                     consists of tabs, icons aligned left, within the card-footer.
                 </p>
                 <p>
-                    <a href="#" class="subdued">1 Like</a>
-                    <a href="#" class="subdued">5 Comments</a>
+                    <a href="#" class="subdued">1 좋아요</a>
+                    <a href="#" class="subdued">5 댓글</a>
                 </p>
             </div>
 
+
+
+            <a class="item item-avatar" href="#">
+                <img src="img/ionic.png">
+                <h2>Venkman</h2>
+                <p>Back off, man. I'm a scientist.</p>
+            </a>
+    <a class="item item-avatar" href="#">
+                <img src="img/ionic.png">
+                <h2>Venkman</h2>
+                <p>Back off, man. I'm a scientist.</p>
+            </a>
+    <a class="item item-avatar" href="#">
+                <img src="img/ionic.png">
+                <h2>Venkman</h2>
+                <p>Back off, man. I'm a scientist.</p>
+            </a>
+
+
+
         </div>
+
+
+
 
     </ion-content>
 

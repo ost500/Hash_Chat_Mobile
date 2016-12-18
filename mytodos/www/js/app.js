@@ -10,7 +10,9 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
 
         $ionicConfigProvider.tabs.position('top');
 
-        $stateProvider.state('tab', {
+        $stateProvider
+
+            .state('tab', {
                 url: "/tab",
                 abstract: true,
                 templateUrl: "templates/tabs.html",
@@ -49,6 +51,17 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
 
             })
 
+            .state('tab.album_detail', {
+                url: '/album_detail/:article_id',
+                views: {
+                    'tab-album': {
+                        templateUrl: 'templates/album_detail.html',
+                        controller: 'AlbumDetailCtrl'
+                    }
+                }
+
+            })
+
             .state('tab.setting', {
                 url: '/setting',
                 views: {
@@ -64,9 +77,19 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
             .state('tab.login', {
                 url: '/login',
                 views: {
-                    'tab-login': {
+                    'tab-setting': {
                         templateUrl: 'templates/login.html',
                         controller: 'LoginCtrl'
+                    }
+                }
+
+            })
+            .state('tab.anony', {
+                url: '/login_anony',
+                views: {
+                    'tab-setting': {
+                        templateUrl: 'templates/login_anony.html',
+                        controller: 'AnonyCtrl'
                     }
                 }
 
@@ -93,16 +116,26 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
         $urlRouterProvider.otherwise('/tab/list');
     })
 
-    .controller('LoginCtrl', function ($scope, $location, $ionicHistory) {
+    .controller('LoginCtrl', function ($scope, $location, $ionicHistory, $ionicPopup) {
         $scope.myGoBack = function () {
             console.log("go back");
             $ionicHistory.goBack();
         };
 
-        console.log($location.url());
-        if ($location.url() == '/login') {
-            $scope.now = "login";
+        $scope.notready = function(social){
+            console.log('not raedy');
+            var alertPopup = $ionicPopup.alert({
+                title: social + ' 로그인 서비스 준비 중입니다'
+
+            });
+
+            alertPopup.then(function(res) {
+                console.log('Thank you for not eating my delicious ice cream cone');
+            });
         }
+    })
+    .controller('AnonyCtrl', function ($scope, $location, $ionicHistory) {
+
     })
 
     .controller('FootCtrl', function ($scope, $ionicTabsDelegate) {
@@ -161,12 +194,23 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
         }
     })
 
-    .controller('AlbumCtrl', function ($scope, $location) {
+    .controller('AlbumCtrl', function ($scope, $stateParams, $location) {
+        console.log($location.url());
+        $scope.album_detail = function () {
+            console.log("album_detail");
+            console.log($stateParams.article_id);
+            $location.path('/tab/album_detail/1');
+        }
+    })
+
+    .controller('AlbumDetailCtrl', function ($scope, $location) {
         console.log($location.url());
         if ($location.url() == '/list') {
 
         }
     })
+
+
     .controller('MyCtrl', function ($scope, $location) {
         $scope.myGoBack = function () {
 

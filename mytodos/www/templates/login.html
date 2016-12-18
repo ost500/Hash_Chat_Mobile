@@ -1,32 +1,30 @@
-<ion-view view-title="목록" ng-controller="LoginCtrl">
+<ion-view view-title="로그인" ng-controller="LoginCtrl">
 
 
 
     <ion-content>
         <div class="list">
-            <a class="item item-icon-left" href="#">
-                <i class="icon ion-email"></i>
-                Check mail
+            <a class="item item-icon-left" href="#/tab/login_anony">
+                <i class="icon ion-person"></i>
+                익명 로그인
             </a>
 
-            <a class="item item-icon-left item-icon-right" href="#">
-                <i class="icon ion-chatbubble-working"></i>
-                Call Ma
-                <i class="icon ion-ios-telephone-outline"></i>
+            <a class="item item-icon-left" ng-click="notready('인스타그램')">
+                <i class="icon ion-social-instagram"></i>
+                인스타그램 로그인
+
             </a>
 
-            <a class="item item-icon-left" href="#">
-                <i class="icon ion-mic-a"></i>
-                Record album
-            <span class="item-note">
-              Grammy
-            </span>
+            <a class="item item-icon-left" ng-click="notready('페이스북')">
+                <i class="icon ion-social-facebook"></i>
+                페이스북 로그인
+
             </a>
 
-            <a class="item item-icon-left" href="#">
+            <a class="item item-icon-left" ng-click="notready('네이버')">
                 <i class="icon ion-person-stalker"></i>
-                Friends
-                <span class="badge badge-assertive">0</span>
+                네이버 로그인
+
             </a>
 
         </div>

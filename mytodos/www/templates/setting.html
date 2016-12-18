@@ -1,90 +1,65 @@
-
-<ion-view view-title="목록" ng-controller="SettingCtrl">
+<ion-view view-title="설정" ng-controller="SettingCtrl">
 
 
     <ion-content>
-        <div ng-if="now">
-
-            <div class="list" >
-                <li class="item item-toggle">
-                    푸쉬 알람
-                    <label class="toggle toggle-positive">
-                        <input type="checkbox">
-                        <div class="track">
-                            <div class="handle"></div>
-                        </div>
-                    </label>
-                </li>
 
 
-                <a class="item item-thumbnail-left" ng-click="loadMore()">
+        <a class="list">
+            <li class="item item-toggle">
+                푸쉬 알람
+                <label class="toggle toggle-positive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+
+            <a href="#/tab/login" class="item item-avatar">
+
+                <img src="img/ionic.png">
+                <h2>익명1234</h2>
+                <p>소셜 로그인</p>
+                <i class="arrow ion-chevron-right"></i>
+
+            </a>
+
+            <!--<a class="item item-thumbnail-left" href="#/tab/login">-->
+            <!--<img src="img/ionic.png">-->
+            <!--<h2>Pretty Hate Machine</h2>-->
+            <!--<p>Nine Inch Nails</p>-->
+            <!--</a>-->
+
+            <div class="item item-divider">
+                내가 올린 글
+            </div>
+
+            <div class="list card">
+
+                <div class="item item-avatar">
                     <img src="img/ionic.png">
-                    <h2>Pretty Hate Machine</h2>
-                    <p>Nine Inch Nails</p>
-                </a>
-
-                <div class="item item-divider">
-                    내가 올린 글
+                    <h2>Marty McFly</h2>
+                    <p>November 05, 1955</p>
                 </div>
 
-                <div class="list card">
-
-                    <div class="item item-avatar">
-                        <img src="img/ionic.png">
-                        <h2>Marty McFly</h2>
-                        <p>November 05, 1955</p>
-                    </div>
-
-                    <div class="item item-body">
-                        <img class="full-image" src="img/ionic.png">
-                        <p>
-                            This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-                            the content is from a card-body consisting of an image and paragraph text. The footer
-                            consists of tabs, icons aligned left, within the card-footer.
-                        </p>
-                        <p>
-                            <a href="#" class="subdued">1 Like</a>
-                            <a href="#" class="subdued">5 Comments</a>
-                        </p>
-                    </div>
-
+                <div class="item item-body">
+                    <img class="full-image" src="img/ionic.png">
+                    <p>
+                        This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+                        the content is from a card-body consisting of an image and paragraph text. The footer
+                        consists of tabs, icons aligned left, within the card-footer.
+                    </p>
+                    <p>
+                        <a href="#" class="subdued">1 Like</a>
+                        <a href="#" class="subdued">5 Comments</a>
+                    </p>
                 </div>
 
             </div>
-        </div>
-
-
-        <div ng-else>
-
-
-            <div class="list">
-                <a class="item item-icon-left" href="#">
-                    <i class="icon ion-email"></i>
-                    Check mail
-                </a>
-
-                <a class="item item-icon-left item-icon-right" href="#">
-                    <i class="icon ion-chatbubble-working"></i>
-                    Call Ma
-                    <i class="icon ion-ios-telephone-outline"></i>
-                </a>
-
-                <a class="item item-icon-left" href="#">
-                    <i class="icon ion-mic-a"></i>
-                    Record album
-            <span class="item-note">
-              Grammy
-            </span>
-                </a>
-
-                <a class="item item-icon-left" href="#">
-                    <i class="icon ion-person-stalker"></i>
-                    Friends
-                    <span class="badge badge-assertive">0</span>
-                </a>
 
             </div>
-        </div>
+
+
     </ion-content>
 
 
