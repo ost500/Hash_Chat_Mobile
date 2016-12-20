@@ -9,5 +9,11 @@
     "www/**/*",
     "!www/lib/**/*",
     "!www/**/*.map"
+  ],
+  "proxies":[
+    {
+      "path": "/api",
+      "proxyUrl": "http://52.78.239.185/"
+    }
   ]
 }

@@ -38,23 +38,101 @@ angular.module('mytodos.chat', [])
     })
 
 
-    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate) {
+    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http) {
+
+        function BrainSocketPubSub() {
+            this.subscriptions = [];
+
+            this.forget = function (args) {
+                for (x = 0; x < this.subscriptions.length; x++) {
+                    if (this.subscriptions[x].name == args[0], this.subscriptions[x].callback == args[1])
+                        this.subscriptions.splice(x, 1);
+                }
+            }
+
+            this.listen = function (name, callback) {
+                this.subscriptions.push({"name": name, "callback": callback});
+                return [name, callback];
+            }
+
+            this.fire = function (name, args) {
+                var temp = [];
+                if (this.subscriptions.length > 0) {
+                    for (var x = 0; x < this.subscriptions.length; x++) {
+                        if (this.subscriptions[x].name == name)
+                            temp.push({"fn": this.subscriptions[x].callback});
+                    }
+                    for (x = 0; x < temp.length; x++) {
+                        temp[x].fn.apply(this, [args]);
+                    }
+                }
+            }
+
+        }
+
+        function BrainSocket(WebSocketConnection, BrainSocketPubSub) {
+            this.connection = WebSocketConnection;
+            this.Event = BrainSocketPubSub;
+
+            this.connection.BrainSocket = this;
+
+            this.connection.digestMessage = function (data) {
+                try {
+                    var object = JSON.parse(data);
+
+                    if (object.server && object.server.event) {
+                        this.BrainSocket.Event.fire(object.server.event, object);
+                    } else {
+                        this.BrainSocket.Event.fire(object.client.event, object);
+                    }
+
+                } catch (e) {
+                    this.BrainSocket.Event.fire(data);
+                }
+            }
+
+            this.connection.onerror = function (e) {
+                console.log(e);
+            }
+
+            this.connection.onmessage = function (e) {
+                this.digestMessage(e.data);
+            }
+
+            this.success = function (data) {
+                this.message('app.success', data);
+            }
+
+            this.error = function (data) {
+                this.message('app.error', data);
+            }
+
+            this.message = function (event, data) {
+                var json = {client: {}};
+                json.client.event = event;
+
+                if (!data) {
+                    data = [];
+                }
+
+                json.client.data = data;
+
+                this.connection.send(JSON.stringify(json));
+            }
+
+
+        }
+        $http.get('/api')
+            .success(function (response) {
+                $scope.content=response;
+            });
 
         console.log('again');
         var app = new BrainSocket(
-            new WebSocket('ws://192.168.10.10:8080'),
+            new WebSocket('ws://52.78.239.185:8080'),
             new BrainSocketPubSub()
         );
-        var submitMessage = function () {
-            var name = $('#name').val();
-            var message = $('#message').val();
-            $('#message').val(''); // 폼 초기화
-            app.message('send.message', {name: name, message: message});
-        };
-        $('form').bind('submit', function () {
-            setTimeout(submitMessage, 0);
-            return false;
-        });
+
 
 
         $scope.hideTime = true;
