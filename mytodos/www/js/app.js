@@ -134,7 +134,18 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
             });
         }
     })
-    .controller('AnonyCtrl', function ($scope, $location, $ionicHistory) {
+    .controller('AnonyCtrl', function ($scope, $http,$location, $ionicHistory) {
+        $scope.email='';
+        $scope.password='';
+        var loginUrl="http//apigee.com/console/salesforce_sandbox";
+
+        $scope.logIn=function(form){
+            console.log(form.password);
+            $http.post(loginUrl,form).then( function(response){
+                console.log(response.data);
+
+            });
+        }
 
     })
 

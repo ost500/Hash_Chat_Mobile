@@ -31,9 +31,17 @@
     <script src="js/todo-data.js"></script>
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script src="js/brain-socket-js/brain-socket.min.js"></script>
+    <script>
+        console.log('again');
+        var app = new BrainSocket(
+                new WebSocket('ws://52.78.239.185:8080'),
+                new BrainSocketPubSub()
+        );
+    </script>
     <script src="js/chat.js"></script>
 
-    <script src="/js/brain-socket-js/brain-socket.min.js"></script>
+
 </head>
 <body ng-app="mytodos">
 
@@ -81,7 +89,7 @@
 </ion-pane>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="/js/brain-socket-js/brain-socket.min.js"></script>
+
 
 
 </body>

@@ -2,23 +2,25 @@
 
 
     <ion-content>
+        <form name="loginForm" ng-submit="logIn(loginForm)">
         <div class="list">
             <label class="item item-input item-stacked-label">
-                <span class="input-label">이름</span>
-                <input type="text" placeholder="홍길동">
+                <span class="input-label">이메일</span>
+                <input type="text"  ng-model="email" name='email' placeholder="example@example.com">
             </label>
 
             <label class="item item-input item-stacked-label">
-                <span class="input-label">이메일</span>
-                <input type="text" placeholder="example@example.com">
+                <span class="input-label">비밀번호</span>
+                <input type="text" ng-model="password" name='password' placeholder="">
             </label>
-
+              {{email}}
 
 
         </div>
         <div class="padding">
-            <button class="button button-block button-positive">로그인</button>
+            <button type="submit" class="button button-block button-positive">로그인</button>
         </div>
+        </form>
     </ion-content>
 
 

@@ -14,7 +14,9 @@
 
                 <!--<div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">-->
                 <div class="message">
+                    <img ng-class="{other_img: message.userId != myId, chat_img:message.userId == myId}" src="/img/ionic.png">
                     <span class="msg">{{ message.text }}</span>
+
                 </div>
 
                 <!--<div class="time" ng-class="{'slide-right': hideTime, '': !hideTime}">{{message.time}}</div>-->
