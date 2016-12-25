@@ -1,4 +1,4 @@
-angular.module('mytodos.chat', [])
+angular.module('mytodos.chat', ['mytodos.login-data'])
     .directive('input', function ($timeout) {
         return {
             restrict: 'E',
@@ -38,14 +38,23 @@ angular.module('mytodos.chat', [])
     })
 
 
-    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http) {
+    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData) {
 
+        // console.log(LoginData.get());
 
-        $http.post('/api/login', {"email": "foo@example.com", "password": "secret"})
-            .success(function (response) {
-                console.log(response);
-            });
-
+        // $http.post('/api/login', {"email": "foo@example.com", "password": "secret"})
+        //     .success(function (response) {
+        //
+        //         $scope.login = {
+        //             email: "foo@example.com",
+        //             api_key: response
+        //         };
+        //         LoginData.create($scope.login);
+        //
+        //     });
+        //
+        //
+        // console.log(LoginData.get());
 
         $scope.hideTime = true;
 
@@ -64,15 +73,25 @@ angular.module('mytodos.chat', [])
             //     time: d
             // });
 
-            app.message('send.message',
-                {name: alternate ? '12345' : '54321', message: $scope.data.message, hash_tag: $scope.hash_tag});
+            console.log($scope.data.message);
+
+            if ($scope.data.message != undefined) {
+                var send = app.message('send.message',
+                    {
+                        user_id: $scope.myId,
+                        name: $scope.my_user_name,
+                        message: $scope.data.message,
+                        hash_tag: $scope.hash_tag,
+                        api_key: $scope.api_key
+                    });
+
+            }
 
 
             delete $scope.data.message;
             $ionicScrollDelegate.scrollBottom(true);
 
         };
-
 
         // (3-3) 수신된 메시지 처리
         app.Event.listen($scope.hash_tag, function (msg) {
@@ -83,7 +102,8 @@ angular.module('mytodos.chat', [])
             d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
 
             $scope.messages.push({
-                userId: msg.server.data.name,
+                user_id : msg.server.data.user_id,
+                user_name: msg.server.data.name,
                 text: msg.server.data.message,
                 time: d
             });
@@ -114,7 +134,8 @@ angular.module('mytodos.chat', [])
 
 
         $scope.data = {};
-        $scope.myId = '12345';
+        $scope.myId = "익명";
+        $scope.my_user_name = LoginData.get().name;
         $scope.messages = [];
         $scope.hash_tag = 'channel123';
 

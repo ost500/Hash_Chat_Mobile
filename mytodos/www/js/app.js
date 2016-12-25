@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
+angular.module('mytodos', ['ionic', 'mytodos.chat'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
@@ -156,24 +156,42 @@ angular.module('mytodos', ['ionic', 'mytodos.todo-data', 'mytodos.chat'])
     })
 
 
-    .controller('ListCtrl', function ($scope, TodoData) {
-        $scope.reorder = false;
-
-        $scope.todos = TodoData.list();
-
-        $scope.remove = function (todoId) {
-            TodoData.remove(todoId);
-        };
-
-        $scope.move = function (todo, fromIndex, toIndex) {
-            console.log(fromIndex + '/' + toIndex);
-            TodoData.move(todo, fromIndex, todoIndex);
-        };
-
-        $scope.toggleReorder = function () {
-            $scope.reorder = !$scope.reorder;
-        };
+    .controller('ListCtrl', function ($scope) {
+        // $scope.reorder = false;
+        //
+        // $scope.todos = TodoData.list();
+        //
+        // $scope.remove = function (todoId) {
+        //     TodoData.remove(todoId);
+        // };
+        //
+        // $scope.move = function (todo, fromIndex, toIndex) {
+        //     console.log(fromIndex + '/' + toIndex);
+        //     TodoData.move(todo, fromIndex, todoIndex);
+        // };
+        //
+        // $scope.toggleReorder = function () {
+        //     $scope.reorder = !$scope.reorder;
+        // };
     })
+    // .controller('ListCtrl', function ($scope, TodoData) {
+    //     $scope.reorder = false;
+    //
+    //     $scope.todos = TodoData.list();
+    //
+    //     $scope.remove = function (todoId) {
+    //         TodoData.remove(todoId);
+    //     };
+    //
+    //     $scope.move = function (todo, fromIndex, toIndex) {
+    //         console.log(fromIndex + '/' + toIndex);
+    //         TodoData.move(todo, fromIndex, todoIndex);
+    //     };
+    //
+    //     $scope.toggleReorder = function () {
+    //         $scope.reorder = !$scope.reorder;
+    //     };
+    // })
 
     .controller('AddCtrl', function ($scope, $state, TodoData) {
         $scope.todo = {

@@ -1,6 +1,6 @@
 /* Empty. Add your own CSS if you like */
 .scroll {
-    padding: 0px 0 50px;
+    padding: 0px 0 0px;
 }
 
 .messages {
@@ -76,17 +76,17 @@
 }
 
 .messages.other .msg {
-    color: black;
-    background-color: #C7C7CC;
+    color: white;
+    background-color: #007AFF;
     display:block;
     float:right;
 }
 
 
 .msg {
-    background: #007AFF;
+    background: #C7C7CC;
     margin: 2px;
-    color: white;
+    color: black;
     padding: 7px;
     border-radius: 10px;
     text-align: right;
@@ -138,4 +138,10 @@
     height: 100%;
     border-radius: 50%;
     font-size: 100%;
+}
+
+.message_user_name{
+    font-size:6px;
+    margin-bottom: -5px;
+    margin-top: -5px;
 }
