@@ -1,5 +1,5 @@
 angular.module('mytodos.login', ['mytodos.login-data'])
-    .controller('LoginOstCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $location) {
+    .controller('LoginOstCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $window, $ionicNavBarDelegate) {
 
         $scope.login_info = {email: "", password: ""};
 
@@ -10,7 +10,7 @@ angular.module('mytodos.login', ['mytodos.login-data'])
 
 
                     LoginData.create(response);
-                    $location.path('/tab/setting');
+                    $window.location.href('#/tab/setting');
 
                 })
                 .error(function (response) {
@@ -27,6 +27,8 @@ angular.module('mytodos.login', ['mytodos.login-data'])
         $scope.register = function () {
             $location.path('/tab/register');
         };
+
+        $ionicNavBarDelegate.showBackButton(true);
 
         // console.log(LoginData.get());
 

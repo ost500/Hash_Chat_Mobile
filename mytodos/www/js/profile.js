@@ -1,20 +1,18 @@
 angular.module('mytodos.profile', ['mytodos.login-data'])
 
-    .controller('ProfileCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $ionicPopup) {
+    .controller('ProfileCtrl', function ($scope, $state, $ionicScrollDelegate, $http, LoginData, $ionicPopup, $ionicNavBarDelegate) {
 
         var login_data = LoginData.get();
         console.log(login_data);
 
 
-
-            $scope.name = login_data.name;
-            $scope.email = login_data.email;
-            $scope.profile_image = login_data.profile_image;
-            $scope.loggedin = login_data.loggedin;
-
+        $scope.name = login_data.name;
+        $scope.email = login_data.email;
+        $scope.profile_image = login_data.profile_image;
+        $scope.loggedin = login_data.loggedin;
 
 
-        $scope.logout = function(){
+        $scope.logout = function () {
             console.log('logout');
             LoginData.logout();
 
@@ -26,13 +24,14 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                 title: "로그아웃",
                 template: "로그아웃 했습니다"
             });
-
+            $state.go('tab.setting');
         };
 
-        $scope.edit = function(){
+        $scope.edit = function () {
             console.log('edit');
             // LoginData.edit();
         };
 
+        $ionicNavBarDelegate.showBackButton(true);
 
     });

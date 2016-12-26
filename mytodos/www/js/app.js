@@ -134,11 +134,12 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
         $urlRouterProvider.otherwise('/tab/list');
     })
 
-    .controller('LoginCtrl', function ($scope, $location, $ionicHistory, $ionicPopup) {
+    .controller('LoginCtrl', function ($scope, $location, $ionicHistory, $ionicPopup, $ionicNavBarDelegate) {
         $scope.myGoBack = function () {
             console.log("go back");
             $ionicHistory.goBack();
         };
+        $ionicNavBarDelegate.showBackButton(true);
 
         $scope.notready = function (social) {
             console.log('not raedy');
@@ -253,13 +254,13 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
     })
 
 
-    .controller('SettingCtrl', function ($scope, $location, LoginData) {
+    .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate) {
 
         var login_data = LoginData.get();
         $scope.name = login_data.name;
         $scope.email = login_data.email;
 
-
+        console.log('setting hihi');
         $scope.login_or_profile = function () {
             console.log('hihi');
             if (!login_data.loggedin) {
@@ -269,6 +270,9 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
             }
 
         };
+        console.log($location.path());
+        
+        $ionicNavBarDelegate.showBackButton(false);
 
 
     })

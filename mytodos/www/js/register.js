@@ -1,5 +1,5 @@
 angular.module('mytodos.register', ['mytodos.login-data'])
-    .controller('RegisterCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $location) {
+    .controller('RegisterCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $state, $ionicHistory) {
 
         $scope.register_info = {name: "", email: "", password: "", password_confirmation:""};
 
@@ -12,8 +12,8 @@ angular.module('mytodos.register', ['mytodos.login-data'])
 
                     LoginData.create(response);
                     console.log(response);
-
-                    $location.path('/tab/setting');
+                    $ionicHistory.clearCache();
+                    $state.go('tab.setting',{},{reload:true});
 
                 })
                 .error(function (response) {
