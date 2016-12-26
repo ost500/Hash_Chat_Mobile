@@ -7,13 +7,13 @@
     >
 
         <div ng-repeat="message in messages"
-             ng-class="{other: message.user_name == my_user_name}"
+             ng-class="{other: message.api_token == my_api_token}"
              class="messages">
 
             <!--<div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">-->
             <div class="message">
 
-                <img ng-class="{other_img: message.user_name == my_user_name, chat_img:message.user_name != my_user_name}"
+                <img ng-class="{other_img: message.api_token == my_api_token, chat_img:message.api_token != my_api_token}"
                      src="/img/ionic.png">
                 <div class="message_user_name">{{ message.user_name }}</div>
 

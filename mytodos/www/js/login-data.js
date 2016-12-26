@@ -2,18 +2,19 @@ angular.module('mytodos.login-data', [])
     .factory('LoginData', function () {
         var login_data = angular.fromJson(window.localStorage['login-user'] || '[]');
         if(login_data.name == null){
-            login_data.name = "익명";
+            login_data.name = "익명"+ Math.floor(Math.random() * (1000) +1);
         }
         if(login_data.email == null){
             login_data.email = "Anonymouse@osteng.com";
         }
-        if(login_data.api_key == null){
-            login_data.api_key = "0";
+        if(login_data.api_key == undefined){
+            login_data.api_token = Math.random().toString(36).substring(7);
         }
 
         function saveToStorage(login_val) {
             window.localStorage["login-user"]  = angular.toJson(login_data);
         }
+
 
         return {
 

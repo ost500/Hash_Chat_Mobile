@@ -1,0 +1,27 @@
+<ion-view view-title="로그인" ng-controller="LoginOstCtrl">
+
+
+    <ion-content>
+
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">이메일</span>
+                <input type="email" ng-model="login_info.email" name='email' placeholder="example@example.com">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">비밀번호</span>
+                <input type="password" ng-model="login_info.password" name='password' placeholder="">
+            </label>
+
+
+
+        </div>
+        <div class="padding">
+            <button type="submit" class="button button-block button-positive" ng-click="logIn()">로그인</button>
+        </div>
+
+    </ion-content>
+
+
+</ion-view>

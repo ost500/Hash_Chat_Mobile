@@ -1,4 +1,4 @@
-angular.module('mytodos.chat', ['mytodos.login-data'])
+angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
     .directive('input', function ($timeout) {
         return {
             restrict: 'E',
@@ -38,24 +38,10 @@ angular.module('mytodos.chat', ['mytodos.login-data'])
     })
 
 
-    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData) {
+    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, WSData) {
 
-        // console.log(LoginData.get());
-
-        // $http.post('/api/login', {"email": "foo@example.com", "password": "secret"})
-        //     .success(function (response) {
-        //
-        //         $scope.login = {
-        //             email: "foo@example.com",
-        //             api_key: response
-        //         };
-        //         LoginData.create($scope.login);
-        //
-        //     });
-        //
-        //
-        // console.log(LoginData.get());
-
+        var app = WSData.get();
+      
         $scope.hideTime = true;
 
         var alternate,
@@ -73,16 +59,16 @@ angular.module('mytodos.chat', ['mytodos.login-data'])
             //     time: d
             // });
 
-            console.log($scope.data.message);
+
 
             if ($scope.data.message != undefined) {
+
                 var send = app.message('send.message',
                     {
-                        user_id: $scope.myId,
                         name: $scope.my_user_name,
                         message: $scope.data.message,
                         hash_tag: $scope.hash_tag,
-                        api_key: $scope.api_key
+                        api_token: $scope.my_api_token
                     });
 
             }
@@ -95,7 +81,6 @@ angular.module('mytodos.chat', ['mytodos.login-data'])
 
         // (3-3) 수신된 메시지 처리
         app.Event.listen($scope.hash_tag, function (msg) {
-            console.log(msg.server.data.message);
 
 
             var d = new Date();
@@ -105,7 +90,8 @@ angular.module('mytodos.chat', ['mytodos.login-data'])
                 user_id : msg.server.data.user_id,
                 user_name: msg.server.data.name,
                 text: msg.server.data.message,
-                time: d
+                time: d,
+                api_token : msg.server.data.api_token
             });
 
             $scope.$apply();
@@ -133,8 +119,10 @@ angular.module('mytodos.chat', ['mytodos.login-data'])
         };
 
 
+
+
         $scope.data = {};
-        $scope.myId = "익명";
+        $scope.my_api_token = LoginData.get().api_token;
         $scope.my_user_name = LoginData.get().name;
         $scope.messages = [];
         $scope.hash_tag = 'channel123';
