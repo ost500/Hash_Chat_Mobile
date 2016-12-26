@@ -65,10 +65,10 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
 
                 var send = app.message('send.message',
                     {
-                        name: $scope.my_user_name,
+                        name: LoginData.get().name,
                         message: $scope.data.message,
                         hash_tag: $scope.hash_tag,
-                        api_token: $scope.my_api_token
+                        api_token: LoginData.get().api_token
                     });
 
             }

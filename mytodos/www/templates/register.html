@@ -1,0 +1,38 @@
+<ion-view view-title="로그인" ng-controller="RegisterCtrl">
+
+
+    <ion-content>
+
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">이름</span>
+                <input type="text" ng-model="register_info.name" name='name' placeholder="홍길동">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">이메일</span>
+                <input type="email" ng-model="register_info.email" name='email' placeholder="example@example.com">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">비밀번호</span>
+                <input type="password" ng-model="register_info.password" name='password' placeholder="****">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">비밀번호 확인</span>
+                <input type="password" ng-model="register_info.password_confirmation" name='password' placeholder="****">
+            </label>
+
+
+
+        </div>
+
+        <div class="padding">
+            <button type="submit" class="button button-block button-assertive" ng-click="register()">회원가입</button>
+        </div>
+
+    </ion-content>
+
+
+</ion-view>

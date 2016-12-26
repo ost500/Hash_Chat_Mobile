@@ -1,33 +1,31 @@
-angular.module('mytodos.login', ['mytodos.login-data'])
-    .controller('LoginOstCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $location) {
+angular.module('mytodos.register', ['mytodos.login-data'])
+    .controller('RegisterCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $location) {
 
-        $scope.login_info = {email: "", password: ""};
+        $scope.register_info = {name: "", email: "", password: "", password_confirmation:""};
 
 
-        $scope.logIn = function () {
-            $http.post('/api/login', $scope.login_info)
+        $scope.register = function () {
+            console.log($scope.register_info);
+            $http.post('/test_api/register', $scope.register_info)
                 .success(function (response) {
 
 
                     LoginData.create(response);
+                    console.log(response);
+
                     $location.path('/tab/setting');
 
                 })
                 .error(function (response) {
-
+                    console.log(response);
                     $ionicPopup.alert({
-                        title: "로그인 에러",
-                        template: "이메일과 비밀번호를 다시 확인해 주세요"
+                        title: "회원가입 에러",
+                        template: "회원가입 정보를 다시 확인해 주세요"
                     });
                 });
 
 
         };
-
-        $scope.register = function () {
-            $location.path('/tab/register');
-        };
-
         // console.log(LoginData.get());
 
         // $http.post('/api/login', {"email": "foo@example.com", "password": "secret"})

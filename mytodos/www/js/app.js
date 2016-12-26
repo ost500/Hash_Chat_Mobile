@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login'])
+angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
@@ -94,15 +94,24 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login'])
                 }
 
             }).state('tab.osteng', {
-                url: '/login_osteng',
-                views: {
-                    'tab-setting': {
-                        templateUrl: 'templates/login_osteng.html',
-                        controller: 'LoginOstCtrl'
-                    }
+            url: '/login_osteng',
+            views: {
+                'tab-setting': {
+                    templateUrl: 'templates/login_osteng.html',
+                    controller: 'LoginOstCtrl'
                 }
+            }
 
-            });
+        }).state('tab.register', {
+            url: '/register',
+            views: {
+                'tab-setting': {
+                    templateUrl: 'templates/register.html',
+                    controller: 'RegisterCtrl'
+                }
+            }
+
+        });
 
         // $stateProvider.state('edit', {
         //     url: '/edit',
@@ -131,26 +140,26 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login'])
             $ionicHistory.goBack();
         };
 
-        $scope.notready = function(social){
+        $scope.notready = function (social) {
             console.log('not raedy');
             var alertPopup = $ionicPopup.alert({
                 title: social + ' 로그인 서비스 준비 중입니다'
 
             });
 
-            alertPopup.then(function(res) {
+            alertPopup.then(function (res) {
                 console.log('Thank you for not eating my delicious ice cream cone');
             });
         }
     })
-    .controller('AnonyCtrl', function ($scope, $http,$location, $ionicHistory) {
-        $scope.email='';
-        $scope.password='';
-        var loginUrl="http//apigee.com/console/salesforce_sandbox";
+    .controller('AnonyCtrl', function ($scope, $http, $location, $ionicHistory) {
+        $scope.email = '';
+        $scope.password = '';
+        var loginUrl = "http//apigee.com/console/salesforce_sandbox";
 
-        $scope.logIn=function(form){
+        $scope.logIn = function (form) {
             console.log(form.password);
-            $http.post(loginUrl,form).then( function(response){
+            $http.post(loginUrl, form).then(function (response) {
                 console.log(response.data);
 
             });
