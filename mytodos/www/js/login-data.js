@@ -10,7 +10,7 @@ angular.module('mytodos.login-data', [])
         if(login_data.api_key == undefined){
             login_data.api_token = Math.random().toString(36).substring(7);
         }
-        if(login_data.api_key == undefined){
+        if(login_data.loggedin == undefined){
             login_data.loggedin = 0;
         }
 
@@ -32,14 +32,12 @@ angular.module('mytodos.login-data', [])
                 saveToStorage();
             },
 
-            remove: function (todoId) {
-                for (var i = 0; i < todos.length; i++) {
-                    if (todos[i].id === todoId) {
-                        todos.splice(i, 1);
-                        saveToStorage();
-                    }
-                }
-
+            logout: function () {
+                login_data.name = "익명"+ Math.floor(Math.random() * (10000) +1);
+                login_data.email = "Anonymouse@osteng.com";
+                login_data.api_token = Math.random().toString(36).substring(7);
+                login_data.loggedin = 0;
+                saveToStorage();
             },
             move: function (todo, fromIndex, toIndex) {
                 todos.splice(fromIndex, 1);

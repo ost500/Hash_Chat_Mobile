@@ -15,11 +15,11 @@
                 </label>
             </li>
 
-            <a href="#/tab/login" class="item item-avatar">
+            <a ng-click="login_or_profile()"  class="item item-avatar">
 
                 <img src="img/ionic.png">
-                <h2>익명1234</h2>
-                <p>소셜 로그인</p>
+                <h2>{{ name }}</h2>
+                <p>{{ email }}</p>
                 <i class="arrow ion-chevron-right"></i>
 
             </a>

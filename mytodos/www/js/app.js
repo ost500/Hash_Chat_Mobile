@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register'])
+angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register', 'mytodos.profile'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
@@ -84,30 +84,30 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
                 }
 
             })
-            .state('tab.anony', {
-                url: '/login_anony',
+            .state('tab.osteng', {
+                url: '/login_osteng',
                 views: {
                     'tab-setting': {
-                        templateUrl: 'templates/login_anony.html',
-                        controller: 'AnonyCtrl'
+                        templateUrl: 'templates/login_osteng.html',
+                        controller: 'LoginOstCtrl'
                     }
                 }
 
-            }).state('tab.osteng', {
-            url: '/login_osteng',
-            views: {
-                'tab-setting': {
-                    templateUrl: 'templates/login_osteng.html',
-                    controller: 'LoginOstCtrl'
-                }
-            }
-
-        }).state('tab.register', {
+            }).state('tab.register', {
             url: '/register',
             views: {
                 'tab-setting': {
                     templateUrl: 'templates/register.html',
                     controller: 'RegisterCtrl'
+                }
+            }
+
+        }).state('tab.profile', {
+            url: '/profile',
+            views: {
+                'tab-setting': {
+                    templateUrl: 'templates/profile.html',
+                    controller: 'ProfileCtrl'
                 }
             }
 
@@ -151,20 +151,6 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
                 console.log('Thank you for not eating my delicious ice cream cone');
             });
         }
-    })
-    .controller('AnonyCtrl', function ($scope, $http, $location, $ionicHistory) {
-        $scope.email = '';
-        $scope.password = '';
-        var loginUrl = "http//apigee.com/console/salesforce_sandbox";
-
-        $scope.logIn = function (form) {
-            console.log(form.password);
-            $http.post(loginUrl, form).then(function (response) {
-                console.log(response.data);
-
-            });
-        }
-
     })
 
     .controller('FootCtrl', function ($scope, $ionicTabsDelegate) {
@@ -267,23 +253,23 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
     })
 
 
-    .controller('SettingCtrl', function ($scope, $location) {
+    .controller('SettingCtrl', function ($scope, $location, LoginData) {
 
-        $scope.loadMore = function loadList() {
-            console.log("hihihihi");
-            $scope.now = false;
-        }
+        var login_data = LoginData.get();
+        $scope.name = login_data.name;
+        $scope.email = login_data.email;
 
-        $scope.now = true;
 
-        console.log($location.url());
-        if ($location.url() == '/setting') {
-            $scope.now = true;
-        }
+        $scope.login_or_profile = function () {
+            console.log('hihi');
+            if (!login_data.loggedin) {
+                $location.path('/tab/login');
+            } else {
+                $location.path('/tab/profile');
+            }
 
-        if ($location.url() == '/login') {
-            $scope.now = false;
-        }
+        };
+
 
     })
 
