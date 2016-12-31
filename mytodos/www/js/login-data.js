@@ -7,7 +7,7 @@ angular.module('mytodos.login-data', [])
         if(login_data.email == null){
             login_data.email = "Anonymouse@osteng.com";
         }
-        if(login_data.api_key == undefined){
+        if(login_data.api_token == undefined){
             login_data.api_token = Math.random().toString(36).substring(7);
         }
         if(login_data.loggedin == undefined){
@@ -29,6 +29,10 @@ angular.module('mytodos.login-data', [])
                 login_data = login;
                 login_data.loggedin = 1;
 
+                saveToStorage();
+            },
+            edit: function(login){
+                login_data = login;
                 saveToStorage();
             },
 

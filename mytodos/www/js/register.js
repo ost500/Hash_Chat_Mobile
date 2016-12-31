@@ -6,13 +6,14 @@ angular.module('mytodos.register', ['mytodos.login-data'])
 
         $scope.register = function () {
             console.log($scope.register_info);
-            $http.post('/test_api/register', $scope.register_info)
+            $http.post('http://52.78.239.185/api/register', $scope.register_info)
                 .success(function (response) {
 
 
                     LoginData.create(response);
                     console.log(response);
                     $ionicHistory.clearCache();
+                    $scope.register_info = null;
                     $state.go('tab.setting',{},{reload:true});
 
                 })
