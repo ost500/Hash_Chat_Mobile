@@ -6,7 +6,7 @@ angular.module('mytodos.ws-data', [])
             new WebSocket('ws://52.78.239.185:8080'),
             new BrainSocketPubSub()
         );
-        
+
         return {
             get: function () {
                 return app;

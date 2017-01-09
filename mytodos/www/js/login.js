@@ -18,7 +18,7 @@ angular.module('mytodos.login', ['mytodos.login-data'])
                        console.log(response);
                     $ionicPopup.alert({
                         title: "로그인 에러",
-                        template: response
+                        template: "이메일과 비밀번호를 다시 확인해 주세요"
                     });
                 });
 

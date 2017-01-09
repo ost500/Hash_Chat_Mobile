@@ -1,55 +1,29 @@
 angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
-    .directive('input', function ($timeout) {
-        return {
-            restrict: 'E',
-            scope: {
-                'returnClose': '=',
-                'onReturn': '&',
-                'onFocus': '&',
-                'onBlur': '&'
-            },
-            link: function (scope, element, attr) {
-                element.bind('focus', function (e) {
-                    if (scope.onFocus) {
-                        $timeout(function () {
-                            scope.onFocus();
-                        });
-                    }
-                });
-                element.bind('blur', function (e) {
-                    if (scope.onBlur) {
-                        $timeout(function () {
-                            scope.onBlur();
-                        });
-                    }
-                });
-                element.bind('keydown', function (e) {
-                    if (e.which == 13) {
-                        // if (scope.returnClose) element[0].blur();
-                        if (scope.onReturn) {
-                            $timeout(function () {
-                                scope.onReturn();
-                            });
-                        }
-                    }
-                });
-            }
-        }
-    })
 
 
     .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, WSData) {
 
+        $scope.sending = false;
+
         var app = WSData.get();
-      
+
         $scope.hideTime = true;
 
         var alternate,
             isIOS = ionic.Platform.isWebView() && ionic.Platform.isIOS();
+        ionic.Platform.isFullScreen = true;
 
         $scope.sendMessage = function () {
-            alternate = !alternate;
 
+            $scope.sending = true;
+
+            $timeout(function () {
+                $scope.sending = false;
+                console.log('hi');
+            }, 300);
+
+
+            $scope.my_api_token = LoginData.get().api_token;
             var d = new Date();
             d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
 
@@ -58,7 +32,6 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
             //     text: $scope.data.message,
             //     time: d
             // });
-
 
 
             if ($scope.data.message != undefined) {
@@ -74,8 +47,13 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
             }
 
 
+            cordova.plugins.Keyboard.focusOffset(0);
+
+
             delete $scope.data.message;
+
             $ionicScrollDelegate.scrollBottom(true);
+
 
         };
 
@@ -87,38 +65,39 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
             d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
 
             $scope.messages.push({
-                user_id : msg.server.data.user_id,
+                user_id: msg.server.data.user_id,
                 user_name: msg.server.data.name,
                 text: msg.server.data.message,
                 time: d,
-                api_token : msg.server.data.api_token
+                api_token: msg.server.data.api_token
             });
 
             $scope.$apply();
 
-            delete $scope.data.message;
+
             $ionicScrollDelegate.scrollBottom(true);
         });
 
 
         $scope.inputUp = function () {
-            if (isIOS) $scope.data.keyboardHeight = 216;
-            $timeout(function () {
-                $ionicScrollDelegate.scrollBottom(true);
-            }, 300);
+            // if (isIOS) $scope.data.keyboardHeight = 216;
+
+            delete $scope.data.message;
 
         };
 
         $scope.inputDown = function () {
-            if (isIOS) $scope.data.keyboardHeight = 0;
-            $ionicScrollDelegate.resize();
+
+            $timeout(function () {
+                $ionicScrollDelegate.scrollBottom(true);
+            }, 300);
         };
 
         $scope.closeKeyboard = function () {
-            // cordova.plugins.Keyboard.close();
+            // $ionicScrollDelegate.resize();
         };
 
-
+        console.log('chatctrl!!');
 
 
         $scope.data = {};

@@ -4,11 +4,14 @@
     <ion-content class="content-stable"
                  on-swipe-left="hideTime = false"
                  on-swipe-right="hideTime = true"
+                 overflow-scroll="false"
+                 ng-focus="inputDown()"
     >
+
 
         <div ng-repeat="message in messages"
              ng-class="{other: message.api_token == my_api_token}"
-             class="messages">
+             class="messages ">
 
             <!--<div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">-->
             <div class="message">
@@ -31,14 +34,23 @@
 
 
     <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+
         <label class="item-input-wrapper">
-            <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()"
-                   ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()"/>
+
+            <input type="text" ng-return="closeKeyboard()" ng-click="inputUp()"
+                   ng-model="data.message" ng-focus="inputUp()" ng-blur="inputDown()" value="" placeholder="">
+            </input>
         </label>
-        <button class="button button-clear" ng-click="sendMessage()">
-            Send
-        </button>
+
+        <!--<textarea ng-model="data.message" value="" placeholder="Send {{toUser.username}} a message..." required-->
+        <!--minlength="1" maxlength="1500" msd-elastic></textarea>-->
+
+
+        <ion-label ng-class="{disabled: sending}" class="button button-clear" ng-click="sendMessage()">
+            전송
+        </ion-label>
     </ion-footer-bar>
+
 
 </ion-view>
 
