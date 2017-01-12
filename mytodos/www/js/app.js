@@ -3,7 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register', 'mytodos.profile'])
+angular.module('mytodos',
+    ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register', 'mytodos.profile',
+        'mytodos.list', 'mytodos.album'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
@@ -52,7 +54,7 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
             })
 
             .state('tab.album_detail', {
-                url: '/album_detail/:article_id',
+                url: '/album_detail/:id',
                 views: {
                     'tab-album': {
                         templateUrl: 'templates/album_detail.html',
@@ -93,25 +95,27 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
                     }
                 }
 
-            }).state('tab.register', {
-            url: '/register',
-            views: {
-                'tab-setting': {
-                    templateUrl: 'templates/register.html',
-                    controller: 'RegisterCtrl'
+            })
+            .state('tab.register', {
+                url: '/register',
+                views: {
+                    'tab-setting': {
+                        templateUrl: 'templates/register.html',
+                        controller: 'RegisterCtrl'
+                    }
                 }
-            }
 
-        }).state('tab.profile', {
-            url: '/profile',
-            views: {
-                'tab-setting': {
-                    templateUrl: 'templates/profile.html',
-                    controller: 'ProfileCtrl'
+            })
+            .state('tab.profile', {
+                url: '/profile',
+                views: {
+                    'tab-setting': {
+                        templateUrl: 'templates/profile.html',
+                        controller: 'ProfileCtrl'
+                    }
                 }
-            }
 
-        });
+            });
 
         // $stateProvider.state('edit', {
         //     url: '/edit',
@@ -161,43 +165,6 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
     })
 
 
-    .controller('ListCtrl', function ($scope) {
-        // $scope.reorder = false;
-        //
-        // $scope.todos = TodoData.list();
-        //
-        // $scope.remove = function (todoId) {
-        //     TodoData.remove(todoId);
-        // };
-        //
-        // $scope.move = function (todo, fromIndex, toIndex) {
-        //     console.log(fromIndex + '/' + toIndex);
-        //     TodoData.move(todo, fromIndex, todoIndex);
-        // };
-        //
-        // $scope.toggleReorder = function () {
-        //     $scope.reorder = !$scope.reorder;
-        // };
-    })
-    // .controller('ListCtrl', function ($scope, TodoData) {
-    //     $scope.reorder = false;
-    //
-    //     $scope.todos = TodoData.list();
-    //
-    //     $scope.remove = function (todoId) {
-    //         TodoData.remove(todoId);
-    //     };
-    //
-    //     $scope.move = function (todo, fromIndex, toIndex) {
-    //         console.log(fromIndex + '/' + toIndex);
-    //         TodoData.move(todo, fromIndex, todoIndex);
-    //     };
-    //
-    //     $scope.toggleReorder = function () {
-    //         $scope.reorder = !$scope.reorder;
-    //     };
-    // })
-
     .controller('AddCtrl', function ($scope, $state, TodoData) {
         $scope.todo = {
             id: new Date().getTime().toString(),
@@ -228,21 +195,8 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
         }
     })
 
-    .controller('AlbumCtrl', function ($scope, $stateParams, $location) {
-        console.log($location.url());
-        $scope.album_detail = function () {
-            console.log("album_detail");
-            console.log($stateParams.article_id);
-            $location.path('/tab/album_detail/1');
-        }
-    })
 
-    .controller('AlbumDetailCtrl', function ($scope, $location) {
-        console.log($location.url());
-        if ($location.url() == '/list') {
-
-        }
-    })
+    
 
 
     .controller('MyCtrl', function ($scope, $location) {
@@ -271,7 +225,7 @@ angular.module('mytodos', ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.re
 
         };
         console.log($location.path());
-        
+
         $ionicNavBarDelegate.showBackButton(false);
 
 

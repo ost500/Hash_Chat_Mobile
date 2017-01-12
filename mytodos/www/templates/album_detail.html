@@ -10,46 +10,35 @@
 
             <div class="item item-avatar">
                 <img src="img/ionic.png">
-                <h2>Marty McFly</h2>
-                <p>November 05, 1955</p>
+                <h2>{{ post.users.name }}</h2>
+                <p>{{ post.created_at }}</p>
             </div>
 
             <div class="item item-body">
-                <img class="full-image" src="img/ionic.png">
+                <img class="full-image" ng-src="{{'http://52.78.239.185'+post.picture}}">
                 <p>
-                    This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-                    the content is from a card-body consisting of an image and paragraph text. The footer
-                    consists of tabs, icons aligned left, within the card-footer.
+                    {{ post.message }}
                 </p>
                 <p>
-                    <a href="#" class="subdued">1 좋아요</a>
-                    <a href="#" class="subdued">5 댓글</a>
+                    <a href="#" class="subdued"><i class="ion-ios-heart-outline"></i>  {{post.likes.length}} 좋아요</a>
+                    <a href="#" class="subdued">{{post.comments.length}} 댓글</a>
                 </p>
             </div>
 
 
-
-            <a class="item item-avatar" href="#">
+            <a ng-repeat="comment in post.comments" class="item item-avatar" href="#">
                 <img src="img/ionic.png">
-                <h2>Venkman</h2>
-                <p>Back off, man. I'm a scientist.</p>
-            </a>
-    <a class="item item-avatar" href="#">
-                <img src="img/ionic.png">
-                <h2>Venkman</h2>
-                <p>Back off, man. I'm a scientist.</p>
-            </a>
-    <a class="item item-avatar" href="#">
-                <img src="img/ionic.png">
-                <h2>Venkman</h2>
-                <p>Back off, man. I'm a scientist.</p>
+                <h2>{{ comment.users.name}}</h2>
+                <p>{{ comment.users.email}}</p>
+                <h3 style="white-space: normal">{{ comment.message }}</h3>
             </a>
 
 
 
         </div>
 
-
+        <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="moreDataCanBeLoaded">
+        </ion-infinite-scroll>
 
 
     </ion-content>

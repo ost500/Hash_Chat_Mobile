@@ -47,7 +47,7 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
             }
 
 
-            cordova.plugins.Keyboard.focusOffset(0);
+            
 
 
             delete $scope.data.message;
