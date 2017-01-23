@@ -9,7 +9,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $scope.moreDataCanBeLoaded = true;
 
         function loadList(page, callback) {
-            $http.get('/api/api/posts?page=' + page)
+            var tag = ListData.get_tag();
+            $http.get('/api/api/posts?tag='+ tag +'&page=' + page)
                 .success(function (response) {
                     var posts = [];
                     if (response.length === 0) {

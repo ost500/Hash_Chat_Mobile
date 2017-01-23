@@ -1,7 +1,7 @@
 angular.module('mytodos.list', ['mytodos.list-data'])
-    .controller('ListCtrl', function ($scope, ListData) {
+    .controller('ListCtrl', function ($http, $scope, ListData) {
 
-        
+
 
         // $scope.reorder = false;
         //
@@ -19,6 +19,40 @@ angular.module('mytodos.list', ['mytodos.list-data'])
         // $scope.toggleReorder = function () {
         //     $scope.reorder = !$scope.reorder;
         // };
+        var tag = ListData.get_tag();
+        $http.get('/api/api/hash_tag_picture?tag=' + tag)
+            .success(function (response) {
+                var picture;
+
+                $scope.picture = response.picture;
+                console.log($scope.picture);
+
+            });
+
+        //
+        // function loadList(callback) {
+        //     var tag = ListData.get_tag();
+        //     console.log('hi');
+        //     $http.get('/api/api/hash_tag_picture?tag=' + tag)
+        //         .success(function (response) {
+        //             var picture;
+        //
+        //             picture = response;
+        //
+        //             callback(picture);
+        //
+        //         });
+        // }
+        //
+        // $scope.loadNew = function () {
+        //
+        //     $scope.moreDataCanBeLoaded = true;
+        //
+        //     loadList(function (picture) {
+        //         $scope.picture = picture;
+        //     });
+        // };
+        // $scope.img_src = img.picture;
     });
 // .controller('ListCtrl', function ($scope, TodoData) {
 //     $scope.reorder = false;
