@@ -3,7 +3,7 @@ angular.module('mytodos.ws-data', [])
 
         console.log('again');
         var app = new BrainSocket(
-            new WebSocket('ws://52.78.239.185:8080'),
+            new WebSocket('ws://52.78.208.21:8080'),
             new BrainSocketPubSub()
         );
 
@@ -11,6 +11,16 @@ angular.module('mytodos.ws-data', [])
             get: function () {
                 return app;
             },
+            refresh: function () {
+                app = new BrainSocket(
+                    new WebSocket('ws://52.78.208.21:8080'),
+                    new BrainSocketPubSub()
+                );
+                return app;
+            },
+            status: function(){
+
+            }
 
         }
     });

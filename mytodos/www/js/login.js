@@ -5,7 +5,7 @@ angular.module('mytodos.login', ['mytodos.login-data'])
 
 
         $scope.logIn = function () {
-            $http.post('http://52.78.239.185/login?email=' + $scope.login_info.email
+            $http.post('http://52.78.208.21/login?email=' + $scope.login_info.email
                     + "&password=" + $scope.login_info.password, {})
                 .success(function (response) {
 

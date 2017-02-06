@@ -36,7 +36,7 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                 }
             }
 
-            $http.post('http://52.78.239.185/api/edit_user?api_token=' + login_data.api_token
+            $http.post('http://52.78.208.21/api/edit_user?api_token=' + login_data.api_token
                 + "&name=" + $scope.profile_data.name
                 + "&email=" + $scope.profile_data.email
                 , {

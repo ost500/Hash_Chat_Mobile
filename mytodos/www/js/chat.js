@@ -15,6 +15,8 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
 
         $scope.sendMessage = function () {
 
+
+            
             $scope.sending = true;
 
             $timeout(function () {

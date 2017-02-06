@@ -10,7 +10,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         function loadList(page, callback) {
             var tag = ListData.get_tag();
-            $http.get('/api/api/posts?tag='+ tag +'&page=' + page)
+            $http.get('http://52.78.208.21/api/posts?tag='+ tag +'&page=' + page)
                 .success(function (response) {
                     var posts = [];
                     if (response.length === 0) {
@@ -62,7 +62,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
 
         function loadList(id, callback) {
-            $http.get('/api/api/each_post/' + id)
+            $http.get('http://52.78.208.21/api/each_post/' + id)
                 .success(function (response) {
                     var post;
                     $scope.moreDataCanBeLoaded = false;

@@ -20,7 +20,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
         //     $scope.reorder = !$scope.reorder;
         // };
         var tag = ListData.get_tag();
-        $http.get('/api/api/hash_tag_picture?tag=' + tag)
+        $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag)
             .success(function (response) {
                 var picture;
 

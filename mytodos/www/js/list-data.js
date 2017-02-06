@@ -7,7 +7,7 @@ angular.module('mytodos.list-data', [])
 
         return {
             get: function () {
-                $http.get('/api/api/posts?tag=수원대학교&page=' + page)
+                $http.get('http://52.78.239.185/api/posts?tag=수원대학교&page=' + page)
                     .success(function (response) {
 
                         console.log(response);
@@ -22,7 +22,7 @@ angular.module('mytodos.list-data', [])
                 return tag;
             },
             get_tag_picture: function () {
-                $http.get('/api/api/hash_tag_picture?tag=' + tag )
+                $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag )
                     .success(function (response) {
 
                         console.log(response);
