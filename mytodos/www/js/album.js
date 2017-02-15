@@ -26,7 +26,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         }
 
         $scope.loadNew = function () {
-            page = 0;
+            page = 1;
             $scope.moreDataCanBeLoaded = true;
 
             loadList(page, function (newData) {

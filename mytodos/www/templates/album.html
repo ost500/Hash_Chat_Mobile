@@ -1,8 +1,8 @@
-<ion-view view-title="할 일 입력" cache-view="false" ng-controller="AlbumCtrl">
+<ion-view view-title="할 일 입력" ng-controller="AlbumCtrl">
 
     <ion-content>
         <ion-refresher
-                pulling-text="PULLPULLPULLPULL"
+                pulling-text="새로고침"
                 on-refresh="loadNew()">
         </ion-refresher>
 
@@ -10,14 +10,14 @@
             <div ng-click="album_detail(post.id)" class="card" ng-repeat="post in posts">
 
                 <div class="item item-avatar">
-                    <img ng-src="{{'http://52.78.239.185'+post.picture}}">
+                    <img ng-src="{{'http://52.78.208.21'+post.picture}}">
                     <h2>{{post.users.name}}</h2>
                     <p>{{post.created_at}}</p>
                     <p>{{post.users.email}}</p>
                 </div>
 
                 <div class="item item-body">
-                    <img class="full-image" ng-src="{{'http://52.78.239.185'+post.picture}}">
+                    <img class="full-image" ng-src="{{'http://52.78.208.21'+post.picture}}">
                     <p>
                         {{post.message}}
                     </p>

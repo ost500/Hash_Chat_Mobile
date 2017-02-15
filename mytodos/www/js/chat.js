@@ -1,7 +1,7 @@
 angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
 
 
-    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, WSData) {
+    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, WSData, $location) {
 
         $scope.sending = false;
 
@@ -16,14 +16,14 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
         $scope.sendMessage = function () {
 
 
-            
-            $scope.sending = true;
 
-            $timeout(function () {
-                $scope.sending = false;
-                console.log('hi');
-            }, 300);
-
+            // $scope.sending = true;
+            //
+            // $timeout(function () {
+            //     $scope.sending = false;
+            //     console.log('hi');
+            // }, 300);
+            //
 
             $scope.my_api_token = LoginData.get().api_token;
             var d = new Date();
@@ -47,9 +47,6 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
                     });
 
             }
-
-
-            
 
 
             delete $scope.data.message;
@@ -84,15 +81,23 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'mytodos.ws-data'])
         $scope.inputUp = function () {
             // if (isIOS) $scope.data.keyboardHeight = 216;
 
-            delete $scope.data.message;
-
+            // delete $scope.data.message;
+            console.log($location.url());
+            if ($location.url() == '/tab/chat') {
+                $timeout(function () {
+                    $ionicScrollDelegate.scrollBottom(true);
+                }, 300);
+            }
         };
 
         $scope.inputDown = function () {
 
-            $timeout(function () {
-                $ionicScrollDelegate.scrollBottom(true);
-            }, 300);
+            console.log($location.url());
+            if ($location.url() == '/tab/chat') {
+                $timeout(function () {
+                    $ionicScrollDelegate.scrollBottom(true);
+                }, 300);
+            }
         };
 
         $scope.closeKeyboard = function () {

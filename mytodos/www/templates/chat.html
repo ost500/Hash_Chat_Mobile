@@ -17,7 +17,7 @@
             <div class="message">
 
                 <img ng-class="{other_img: message.api_token == my_api_token, chat_img:message.api_token != my_api_token}"
-                     src="http://52.78.239.185/img/ionic.png">
+                     src="http://52.78.208.21/img/ionic.png">
                 <div class="message_user_name">{{ message.user_name }}</div>
 
                 <span class="msg">{{ message.text }}</span>
@@ -35,20 +35,29 @@
 
     <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
 
-        <label class="item-input-wrapper">
+        <form style="width:100%; height:100%" ng-submit="sendMessage()">
+            <div style="margin:0; padding:0" class="row">
+                <div style="margin:0; padding:0" class="col col-80">
+                    <label class="item-input-wrapper">
 
-            <input type="text" ng-return="closeKeyboard()" ng-click="inputUp()"
-                   ng-model="data.message" ng-focus="inputUp()" ng-blur="inputDown()" value="" placeholder="">
-            </input>
-        </label>
+                        <input type="text" ng-return="closeKeyboard()" ng-click="inputUp()"
+                               ng-model="data.message" ng-focus="inputUp()" ng-blur="inputDown()" value=""
+                               placeholder="">
+                        </input>
+                    </label>
+                </div>
 
-        <!--<textarea ng-model="data.message" value="" placeholder="Send {{toUser.username}} a message..." required-->
-        <!--minlength="1" maxlength="1500" msd-elastic></textarea>-->
+                <!--<textarea ng-model="data.message" value="" placeholder="Send {{toUser.username}} a message..." required-->
+                <!--minlength="1" maxlength="1500" msd-elastic></textarea>-->
 
+                <div style="margin:0; padding:0; text-align: center; margin-top:-4px;" class="col">
+                    <button ng-class="{disabled: sending}" class="button button-clear" for="submit">
+                        전송
+                    </button>
+                </div>
+            </div>
 
-        <ion-label ng-class="{disabled: sending}" class="button button-clear" ng-click="sendMessage()">
-            전송
-        </ion-label>
+        </form>
     </ion-footer-bar>
 
 
