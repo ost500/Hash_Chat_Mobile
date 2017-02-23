@@ -13,7 +13,7 @@
   "proxies":[
     {
       "path": "/api",
-      "proxyUrl": "http://52.78.239.185/"
+      "proxyUrl": "http://52.78.208.21/"
     },
     {
       "path": "/test_api",
