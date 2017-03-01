@@ -1,48 +1,50 @@
 <ion-view view-title="#{{titleName}}" ng-controller="AlbumDetailCtrl">
     <ion-content>
         <div class="list">
+            <form ng-submit="submit()" method="post">
+                <div class="item item-avatar">
+                    <img src="img/ionic.png">
+                    <h2 style="padding:10px">{{ profile_data.name }}</h2>
 
-            <div class="item item-avatar">
-                <img src="img/ionic.png">
-                <h2 style="padding:10px">{{ profile_data.name }}</h2>
-
-            </div>
-
-            <div class="item item-body">
-                <div class="item item-divider">
-                    내용
                 </div>
 
-                <label class="item item-input item-stacked-label">
-                    <textarea ng-model="create_data.message" type="text" rows="10"></textarea>
-                </label>
-            </div>
+                <div class="item item-body">
+                    <div class="item item-divider">
+                        내용
+                    </div>
 
-
-            <div class="item item-body">
-                <div class="item item-divider">
-                    그림 선택
+                    <label class="item item-input item-stacked-label">
+                        <textarea ng-model="create_data.message" type="text" rows="10"></textarea>
+                    </label>
                 </div>
 
-                <input type="file" accept="image/*;capture=camera">
 
-            </div>
+                <div class="item item-body">
+                    <div class="item item-divider">
+                        그림 선택
+                    </div>
 
+                    <input type="file" accept="image/*;capture=camera">
 
-            <div class="item item-body">
-                <div class="item item-divider">
-                    해시태그
                 </div>
 
-                <label class="item item-input item-stacked-label">
-                    <textarea ng-model="create_data.hashtag"  type="text" rows="1"></textarea>
-                </label>
-            </div>
-            <div class="item item-body">
-                <button ng-click="submit()" class="button button-full button-positive">
-                    <i class="ion-compose"></i> 글쓰기
-                </button>
-            </div>
+
+                <div class="item item-body">
+                    <div class="item item-divider">
+                        해시태그
+                    </div>
+
+                    <label class="item item-input item-stacked-label">
+                        <textarea ng-model="create_data.hashtag" type="text" rows="1"></textarea>
+                    </label>
+                </div>
+                <div class="item item-body">
+                    <button class="button button-full button-positive">
+                        <i class="ion-compose"></i> 글쓰기
+                    </button>
+                </div>
+            </form>
         </div>
+
     </ion-content>
 </ion-view>
