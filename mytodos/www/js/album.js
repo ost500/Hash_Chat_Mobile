@@ -41,8 +41,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             });
         };
 
-        $scope.$on('$ionicView.enter', function()
-        {
+        $scope.$on('$ionicView.enter', function () {
             $scope.loadNew();
         });
 
@@ -64,7 +63,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             console.log("album_detail");
             console.log($stateParams.article_id);
             $location.path('/tab/album_detail/' + id);
-        }
+        };
 
         $scope.write = function () {
             console.log("Create Click");
@@ -75,8 +74,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     })
 
 
-
-    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData) {
+    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope) {
         $scope.post = "";
 
         $scope.moreDataCanBeLoaded = true;
@@ -117,28 +115,36 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         var tag = ListData.get_tag();
 
         $scope.titleName = tag;
+
+
+        $rootScope.$ionicGoBack = function () {
+            $location.path('/tab/album');
+        }
     })
 
 
-
-
-
-
-
-
-
-
-    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData) {
+    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate) {
         $scope.post = "";
+        var tag = ListData.get_tag();
+
+        $scope.titleName = tag;
 
         $scope.moreDataCanBeLoaded = true;
+
+        $ionicNavBarDelegate.showBackButton(true);
 
 
         var login_data = LoginData.get();
         console.log(login_data);
 
-        $scope.create_data = {};
+        $scope.$on('$ionicView.enter', function () {
+            tag = ListData.get_tag();
 
+            $scope.create_data = {
+                message: "",
+                hashtag: "#" + tag
+            };
+        });
 
         $scope.profile_data = {};
 
@@ -192,8 +198,13 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 }
             }).success(function (response) {
-                console.log('response');
                 console.log(response);
+
+                $scope.create_data.message = "";
+                $scope.create_data.hashtag = "#" + tag;
+
+                $location.path('/tab/album_detail/' + response.id);
+
             }).error(function (response) {
                 console.log(response);
 
@@ -219,8 +230,5 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         }
 
-        var tag = ListData.get_tag();
-
-        $scope.titleName = tag;
 
     });
