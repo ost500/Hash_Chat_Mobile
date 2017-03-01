@@ -1,4 +1,5 @@
-<ion-view view-title="목록" ng-controller="ListCtrl">
+
+<ion-view view-title="목록aaaaaaa" ng-controller="ListCtrl">
 
 
     <ion-content>
@@ -7,20 +8,20 @@
         <div class="list list-inset">
             <label class="item item-input">
                 <i class="icon ion-pound placeholder-icon"></i>
-                <input type="text" placeholder="Search">
+                <input ng-change="search_change()" ng-model="search_text.text" type="text" placeholder="Search">
             </label>
         </div>
 
-        <img class="full-image" ng-src="{{ 'http://52.78.208.21' + picture }}">
+        <img ng-if="!search" class="full-image" ng-src="{{ 'http://52.78.208.21' + picture }}">
 
         <div ng-repeat="hashtag in hashtags">
-            <div v-if="$even" class="row">
+            <div ng-if="$even" class="row">
                 <div class="col col-50">
                     <button class="button button-full button-stable">
                         #{{ hashtags[$index].tag }}
                     </button>
                 </div>
-                <div class="col col-50">
+                <div ng-if="hashtags[$index+1].tag" class="col col-50">
                     <button class="button button-full button-stable">
                         #{{ hashtags[$index+1].tag }}
                     </button>
