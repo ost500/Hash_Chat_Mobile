@@ -10,7 +10,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         function loadList(page, callback) {
             var tag = ListData.get_tag();
-            $http.get('http://52.78.208.21/api/posts?tag='+ tag +'&page=' + page)
+            $http.get('http://52.78.208.21/api/posts?tag=' + tag + '&page=' + page)
                 .success(function (response) {
                     var posts = [];
                     if (response.length === 0) {
@@ -59,6 +59,42 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $scope.moreDataCanBeLoaded = true;
 
+
+        function loadList(id, callback) {
+            $http.get('http://52.78.208.21/api/each_post/' + id)
+                .success(function (response) {
+                    var post;
+                    $scope.moreDataCanBeLoaded = false;
+                    post = response;
+                    callback(post);
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+        }
+
+        $scope.loadNew = function () {
+            $scope.moreDataCanBeLoaded = true;
+            loadList($stateParams.id, function (newData) {
+                $scope.post = newData;
+            });
+        };
+
+
+        $scope.loadMore = function () {
+            console.log('hi');
+            loadList($stateParams.id, function (data) {
+                $scope.post = data;
+                console.log(data);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+
+        };
+
+    })
+    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http) {
+        $scope.post = "";
+
+        $scope.moreDataCanBeLoaded = true;
 
 
         function loadList(id, callback) {

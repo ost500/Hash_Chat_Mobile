@@ -52,7 +52,16 @@ angular.module('mytodos',
                 }
 
             })
-           
+            .state('tab.album_create', {
+                url: '/album_create',
+                views: {
+                    'tab-album': {
+                        templateUrl: 'templates/album_create.html',
+                        controller: 'AlbumCreateCtrl'
+                    }
+                }
+
+            })
 
             .state('tab.album_detail', {
                 url: '/album_detail/:id',
