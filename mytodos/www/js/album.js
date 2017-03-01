@@ -76,7 +76,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
 
 
-    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate) {
+    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData) {
         $scope.post = "";
 
         $scope.moreDataCanBeLoaded = true;
@@ -128,7 +128,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
 
 
-    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup) {
+    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData) {
         $scope.post = "";
 
         $scope.moreDataCanBeLoaded = true;
@@ -218,5 +218,9 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
 
         }
+
+        var tag = ListData.get_tag();
+
+        $scope.titleName = tag;
 
     });

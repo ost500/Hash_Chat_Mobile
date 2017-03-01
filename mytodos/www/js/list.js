@@ -17,7 +17,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
             .success(function (response) {
 
 
-                $scope.picture = response.picture;
+                $scope.picture.addr = response.picture;
                 console.log($scope.picture);
 
             });
@@ -29,7 +29,10 @@ angular.module('mytodos.list', ['mytodos.list-data'])
         $scope.search_text = {
             text: ""
         };
+        $scope.picture = {
+            addr: "",
 
+        };
 
 
         $scope.search_change = function () {
@@ -58,15 +61,23 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
                     $scope.hashtags = response;
                 });
-        }
+        };
 
 
         $scope.titleName = tag;
 
-        $scope.changeTag = function (newTag)
-        {
+        $scope.changeTag = function (newTag) {
             ListData.set_tag(newTag);
             $scope.titleName = newTag;
+
+            $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + newTag)
+                .success(function (response) {
+
+
+                    $scope.picture.addr = response.picture;
+                    console.log($scope.picture);
+
+                });
         }
 
     });

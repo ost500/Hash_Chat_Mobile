@@ -1,4 +1,4 @@
-<ion-view view-title="{{titleName}}" ng-controller="ListCtrl">
+<ion-view view-title="#{{titleName}}" ng-controller="ListCtrl">
     <ion-content>
 
 
@@ -9,7 +9,7 @@
             </label>
         </div>
 
-        <img ng-if="!search" class="full-image" ng-src="{{ 'http://52.78.208.21' + picture }}">
+        <img ng-if="!search" class="full-image" ng-src="{{ 'http://52.78.208.21' + picture.addr }}">
 
         <div ng-repeat="hashtag in hashtags">
             <div ng-if="$even" class="row">
