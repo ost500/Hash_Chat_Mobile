@@ -6,7 +6,7 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         $scope.hash_tag = 'channel123';
         var ref = new Firebase('https://hashchat-e36db.firebaseio.com');
 
-        var sync = $firebase(ref.child('chat').child($scope.hash_tag).limitToLast(5));
+        var sync = $firebase(ref.child('chat').child($scope.hash_tag));
 
         $scope.chats = sync.$asArray();
 

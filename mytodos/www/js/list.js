@@ -20,9 +20,19 @@ angular.module('mytodos.list', ['mytodos.list-data'])
         //     $scope.reorder = !$scope.reorder;
         // };
         var tag = ListData.get_tag();
+        $http.get('http://52.78.208.21/api/hashtag?tag=수원대학교')
+            .success(function (response) {
+                console.log(response);
+
+                $scope.hashtags = response;
+                
+                
+
+            });
+
         $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag)
             .success(function (response) {
-                var picture;
+
 
                 $scope.picture = response.picture;
                 console.log($scope.picture);

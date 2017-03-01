@@ -52,6 +52,7 @@ angular.module('mytodos',
                 }
 
             })
+           
 
             .state('tab.album_detail', {
                 url: '/album_detail/:id',

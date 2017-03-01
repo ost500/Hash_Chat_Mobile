@@ -1,41 +1,39 @@
-
-    <ion-view view-title="목록" ng-controller="ListCtrl">
-
-
-        <ion-content>
+<ion-view view-title="목록" ng-controller="ListCtrl">
 
 
-            <div class="list list-inset">
-                <label class="item item-input">
-                    <i class="icon ion-pound placeholder-icon"></i>
-                    <input type="text" placeholder="Search">
-                </label>
+    <ion-content>
+
+
+        <div class="list list-inset">
+            <label class="item item-input">
+                <i class="icon ion-pound placeholder-icon"></i>
+                <input type="text" placeholder="Search">
+            </label>
+        </div>
+
+        <img class="full-image" ng-src="{{ 'http://52.78.208.21' + picture }}">
+
+        <div ng-repeat="hashtag in hashtags">
+            <div v-if="$even" class="row">
+                <div class="col col-50">
+                    <button class="button button-full button-stable">
+                        #{{ hashtags[$index].tag }}
+                    </button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-full button-stable">
+                        #{{ hashtags[$index+1].tag }}
+                    </button>
+                </div>
             </div>
+        </div>
+    </ion-content>
+    <!--<div class="bar bar-footer bar-stable">-->
 
-            <img class="full-image" ng-src="{{ 'http://52.78.239.185/' + picture }}">
-
-            <ion-list show-reorder="reorder">
-
-                <ion-item class="item-icon-right item-remove-animate" href="#/edit/{{todo.id}}"
-                          ng-repeat="todo in todos">
-                    <h2>{{todo.title}}</h2>
-                    <p>{{todo.description}}</p>
-                    <i ng-if="todo.complete" class="icon ion-checkmark-circled"></i>
-
-                    <ion-reorder-button class="ion-drag"
-                                        on-reorder="move(todo, $fromIndex, $toIndex)"></ion-reorder-button>
-
-                    <ion-option-button class="button-assertive icon-left ion-ios-trash"
-                                       ng-click="remove(todo.id)"></ion-option-button>
-                </ion-item>
-            </ion-list>
-        </ion-content>
-        <!--<div class="bar bar-footer bar-stable">-->
-
-        <!--<a href="#/add" class="button button-calm icon-left ion-compose ">-->
-        <!--add </a>-->
-        <!--<button class="button button-assertive icon-left ion-shuffle" ng-click="toggleReorder()">정렬</button>-->
-        <!--</div>-->
+    <!--<a href="#/add" class="button button-calm icon-left ion-compose ">-->
+    <!--add </a>-->
+    <!--<button class="button button-assertive icon-left ion-shuffle" ng-click="toggleReorder()">정렬</button>-->
+    <!--</div>-->
 
 
-    </ion-view>
+</ion-view>
