@@ -60,4 +60,13 @@ angular.module('mytodos.list', ['mytodos.list-data'])
                 });
         }
 
+
+        $scope.titleName = tag;
+
+        $scope.changeTag = function (newTag)
+        {
+            ListData.set_tag(newTag);
+            $scope.titleName = newTag;
+        }
+
     });

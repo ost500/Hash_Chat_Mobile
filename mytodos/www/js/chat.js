@@ -1,14 +1,10 @@
 angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
 
-    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase) {
+    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData) {
 
-        $scope.hash_tag = 'channel123';
-        var ref = new Firebase('https://hashchat-e36db.firebaseio.com');
+        $scope.hash_tag = ListData.get_tag();
 
-        var sync = $firebase(ref.child('chat').child($scope.hash_tag));
-
-        $scope.chats = sync.$asArray();
 
 
         $scope.sending = false;
@@ -63,6 +59,19 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
             $ionicScrollDelegate.scrollBottom(true);
         });
 
+
+        $scope.$on('$ionicView.enter', function()
+        {
+
+            $scope.titleName = ListData.get_tag();
+            $scope.hash_tag = ListData.get_tag();
+
+            var ref = new Firebase('https://hashchat-e36db.firebaseio.com');
+
+            var sync = $firebase(ref.child('chat').child($scope.hash_tag));
+
+            $scope.chats = sync.$asArray();
+        });
 
         // (3-3) 수신된 메시지 처리
         // app.Event.listen($scope.hash_tag, function (msg) {
@@ -119,6 +128,6 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         $scope.my_api_token = LoginData.get().api_token;
         $scope.my_user_name = LoginData.get().name;
         $scope.messages = [];
-        $scope.hash_tag = 'channel123';
+
 
     });

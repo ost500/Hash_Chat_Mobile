@@ -1,7 +1,4 @@
-
-<ion-view view-title="목록aaaaaaa" ng-controller="ListCtrl">
-
-
+<ion-view view-title="{{titleName}}" ng-controller="ListCtrl">
     <ion-content>
 
 
@@ -17,12 +14,12 @@
         <div ng-repeat="hashtag in hashtags">
             <div ng-if="$even" class="row">
                 <div class="col col-50">
-                    <button class="button button-full button-stable">
+                    <button ng-click="changeTag(hashtags[$index].tag)" class="button button-full button-stable">
                         #{{ hashtags[$index].tag }}
                     </button>
                 </div>
                 <div ng-if="hashtags[$index+1].tag" class="col col-50">
-                    <button class="button button-full button-stable">
+                    <button ng-click="changeTag(hashtags[$index+1].tag)" class="button button-full button-stable">
                         #{{ hashtags[$index+1].tag }}
                     </button>
                 </div>

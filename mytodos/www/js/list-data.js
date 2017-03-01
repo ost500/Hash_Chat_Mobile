@@ -21,6 +21,12 @@ angular.module('mytodos.list-data', [])
             get_tag: function () {
                 return tag;
             },
+
+            set_tag : function(newTag){
+                tag = newTag;
+            },
+
+
             get_tag_picture: function () {
                 $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag )
                     .success(function (response) {

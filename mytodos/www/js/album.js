@@ -12,6 +12,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         function loadList(page, callback) {
             var tag = ListData.get_tag();
+            console.log(tag);
             $http.get('http://52.78.208.21/api/posts?tag=' + tag + '&page=' + page)
                 .success(function (response) {
                     var posts = [];
@@ -28,6 +29,10 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         }
 
         $scope.loadNew = function () {
+            var tag = ListData.get_tag();
+
+            $scope.titleName = tag;
+
             page = 1;
             $scope.moreDataCanBeLoaded = true;
 
@@ -35,6 +40,11 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                 $scope.posts = newData;
             });
         };
+
+        $scope.$on('$ionicView.enter', function()
+        {
+            $scope.loadNew();
+        });
 
 
         $scope.loadMore = function () {
@@ -60,7 +70,12 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             console.log("Create Click");
             $location.path('/tab/album_create');
         }
+
+
     })
+
+
+
     .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate) {
         $scope.post = "";
 
@@ -98,7 +113,21 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             });
 
         };
+
+        var tag = ListData.get_tag();
+
+        $scope.titleName = tag;
     })
+
+
+
+
+
+
+
+
+
+
     .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup) {
         $scope.post = "";
 
