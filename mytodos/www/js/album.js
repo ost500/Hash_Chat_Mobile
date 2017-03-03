@@ -224,7 +224,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             });
         };
 
-        $scope.deleteComment = function(id) {
+        $scope.deleteComment = function (id) {
             console.log(id);
             $http.delete('api/api/comments/' + id + '?api_token=' + LoginData.get().api_token,
                 {})
@@ -251,7 +251,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     })
 
 
-    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate) {
+    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate,$cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet) {
         $scope.post = "";
         var tag = ListData.get_tag();
 
@@ -264,6 +264,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         var login_data = LoginData.get();
         console.log(login_data);
+
 
         $scope.$on('$ionicView.enter', function () {
             tag = ListData.get_tag();
@@ -339,7 +340,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     mimeType: "multipart/form-data",
 
                 }
-            )
+                )
                 .success(function (response) {
                     console.log(response);
 
@@ -371,6 +372,117 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             });
 
 
+        }
+
+        $scope.image = null;
+
+        $scope.showAlert = function (title, msg) {
+            var alertPopup = $ionicPopup.alert({
+                title: title,
+                template: msg
+            });
+        };
+
+        $scope.loadImage = function () {
+            var options = {
+                title: 'Select Image Source',
+                buttonLabels: ['Load from Library', 'Use Camera'],
+                addCancelButtonWithLabel: 'Cancel',
+                androidEnableCancelButton: true,
+            };
+            $cordovaActionSheet.show(options).then(function (btnIndex) {
+                var type = null;
+                if (btnIndex === 1) {
+                    type = Camera.PictureSourceType.PHOTOLIBRARY;
+                } else if (btnIndex === 2) {
+                    type = Camera.PictureSourceType.CAMERA;
+                }
+                if (type !== null) {
+                    $scope.selectPicture(type);
+                }
+            });
+        };
+
+        $scope.selectPicture = function (sourceType) {
+            var options = {
+                quality: 100,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: sourceType,
+                saveToPhotoAlbum: false
+            };
+
+            $cordovaCamera.getPicture(options).then(function (imagePath) {
+                    // Grab the file name of the photo in the temporary directory
+                    var currentName = imagePath.replace(/^.*[\\\/]/, '');
+
+                    //Create a new name for the photo
+                    var d = new Date(),
+                        n = d.getTime(),
+                        newFileName = n + ".jpg";
+
+                    // If you are trying to load image from the gallery on Android we need special treatment!
+                    if ($cordovaDevice.getPlatform() == 'Android' && sourceType === Camera.PictureSourceType.PHOTOLIBRARY) {
+                        window.FilePath.resolveNativePath(imagePath, function (entry) {
+                                window.resolveLocalFileSystemURL(entry, success, fail);
+                                function fail(e) {
+                                    console.error('Error: ', e);
+                                }
+
+                                function success(fileEntry) {
+                                    var namePath = fileEntry.nativeURL.substr(0, fileEntry.nativeURL.lastIndexOf('/') + 1);
+                                    // Only copy because of access rights
+                                    $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function (success) {
+                                        $scope.image = newFileName;
+                                    }, function (error) {
+                                        $scope.showAlert('Error', error.exception);
+                                    });
+                                };
+                            }
+                        );
+                    } else {
+                        var namePath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+                        // Move the file to permanent storage
+                        $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
+                            $scope.image = newFileName;
+                        }, function (error) {
+                            $scope.showAlert('Error', error.exception);
+                        });
+                    }
+                },
+                function (err) {
+                    // Not always an error, maybe cancel was pressed...
+                })
+        };
+
+        $scope.pathForImage = function(image) {
+            if (image === null) {
+                return '';
+            } else {
+                return cordova.file.dataDirectory + image;
+            }
+        };
+
+        $scope.uploadImage = function() {
+            // Destination URL
+            var url = "http://localhost:8888/upload.php";
+
+            // File for Upload
+            var targetPath = $scope.pathForImage($scope.image);
+
+            // File name only
+            var filename = $scope.image;;
+
+            var options = {
+                fileKey: "file",
+                fileName: filename,
+                chunkedMode: false,
+                mimeType: "multipart/form-data",
+                params : {'fileName': filename}
+            };
+
+            $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
+                $scope.showAlert('Success', 'Image upload finished.');
+            });
         }
 
 
