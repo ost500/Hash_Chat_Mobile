@@ -90,6 +90,12 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $scope.post = "";
         $scope.like = "";
         $scope.comments = [];
+        $scope.profile_data = LoginData.get();
+        $scope.commentInput = {"data": ""};
+
+        $scope.shouldShowDelete = false;
+        $scope.shouldShowReorder = false;
+        $scope.listCanSwipe = true;
 
         var page = 1;
 
@@ -192,7 +198,56 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $rootScope.$ionicGoBack = function () {
             $location.path('/tab/album');
-        }
+        };
+
+
+        $scope.commentSubmit = function () {
+            console.log($scope.commentInput.data);
+            $http.post('api/api/comments/' + $stateParams.id + '?api_token=' + LoginData.get().api_token,
+                $scope.commentInput)
+                .success(function (response) {
+                    page = 1;
+
+                    commentsLoad($stateParams.id, function (newData) {
+                        page = page + 1;
+                        $scope.comments = newData;
+                        console.log(newData);
+                    });
+
+                    $scope.commentInput.data = null;
+                }).error(function (response) {
+                console.log(response);
+                $ionicPopup.alert({
+                    title: "에러",
+                    template: response
+                });
+            });
+        };
+
+        $scope.deleteComment = function(id) {
+            console.log(id);
+            $http.delete('api/api/comments/' + id + '?api_token=' + LoginData.get().api_token,
+                {})
+                .success(function (response) {
+                    page = 1;
+
+                    commentsLoad($stateParams.id, function (newData) {
+                        page = page + 1;
+                        $scope.comments = newData;
+                        console.log(newData);
+                    });
+
+                    $scope.commentInput.data = null;
+                }).error(function (response) {
+                console.log(response);
+                $ionicPopup.alert({
+                    title: "에러",
+                    template: response
+                });
+            });
+
+        };
+
     })
 
 

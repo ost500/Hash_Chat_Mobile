@@ -1,5 +1,4 @@
-<script src="../js/album.js"></script>
-<script src="../js/list.js"></script>
+
 <ion-view view-title="#{{titleName}}" ng-controller="AlbumDetailCtrl">
 
     <ion-content>
@@ -29,22 +28,34 @@
                 </p>
             </div>
 
-            <div class="item item-input-inset">
-                <label class="item-input-wrapper">
-                    <input style="width:100%" type="text" placeholder="Email">
+
+            <div class="item item-input-inset item-avatar">
+
+
+                <img ng-src="{{'http://52.78.208.21/' + profile_data.picture}}">
+                <label style="margin-left:15%" class="item-input-wrapper">
+                    <input ng-model="commentInput.data" style="width:100%" type="text" placeholder="댓글">
                 </label>
-                <button class="button button-small">
-                    Submit
+                <button ng-click="commentSubmit()" class="button button-small">
+                    전송
                 </button>
             </div>
 
 
-            <a ng-repeat="comment in comments" class="item item-avatar" href="#">
-                <img ng-src="{{'http://52.78.208.21/' + comment.users.picture}}">
-                <h2>{{ comment.users.name}}</h2>
-                <p>{{ comment.users.email}}</p>
-                <h3 style="white-space: normal">{{ comment.message }}</h3>
-            </a>
+            <ion-list show-delete="shouldShowDelete"
+                      can-swipe="listCanSwipe">
+                <ion-item class="item item-avatar" ng-repeat="comment in comments">
+
+                    <img ng-src="{{'http://52.78.208.21/' + comment.users.picture}}">
+                    <h2>{{ comment.users.name}}</h2>
+                    <p>{{ comment.users.email}}</p>
+                    <h3 style="white-space: normal">{{ comment.message }}</h3>
+                    <ion-option-button class="button-assertive"
+                                       ng-click="deleteComment(comment.id)">
+                        삭제
+                    </ion-option-button>
+                </ion-item>
+            </ion-list>
 
 
         </div>
