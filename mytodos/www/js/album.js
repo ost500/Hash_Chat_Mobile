@@ -74,8 +74,9 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     })
 
 
-    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope) {
+    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope, LoginData, $ionicPopup) {
         $scope.post = "";
+        $scope.like = "";
 
         $scope.moreDataCanBeLoaded = true;
 
@@ -83,7 +84,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $ionicNavBarDelegate.showBackButton(true);
 
         function loadList(id, callback) {
-            $http.get('http://52.78.208.21/api/each_post/' + id)
+            $http.get('http://52.78.208.21/api/each_post/' + id + '?api_token=' + LoginData.get().api_token)
                 .success(function (response) {
                     var post;
                     $scope.moreDataCanBeLoaded = false;
@@ -107,9 +108,36 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             console.log('hi');
             loadList($stateParams.id, function (data) {
                 $scope.post = data[0];
-                console.log(data[1]);
+                $scope.like = data[1]["like"];
+
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
+
+        };
+
+        $scope.likeFunction = function () {
+            console.log('like function');
+            console.log(LoginData.get().api_token);
+
+            $http.post('api/api/like/' + $scope.post.id + '?api_token=' + LoginData.get().api_token, {})
+                .success(function (response) {
+                    console.log(response);
+
+                    loadList($stateParams.id, function (newData) {
+                        $scope.post = newData[0];
+                        $scope.like = newData[1]["like"];
+                        console.log(newData[1]["like"]);
+                    });
+
+                })
+                .error(function (response) {
+                    console.log(response);
+
+                    $ionicPopup.alert({
+                        title: "에러",
+                        template: response
+                    });
+                });
 
         };
 
@@ -192,9 +220,6 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         };
 
 
-
-
-
         $scope.submit = function () {
 
             var formData = new FormData($("#postForm")[0]);
@@ -206,12 +231,12 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             console.log($scope.create_data.picture);
             console.log(formData.picture);
 
-            $http.post('api/api/posts',
+            $http.post('api/api/posts' + '?api_token=' + LoginData.get().api_token,
                 formData, {
                     headers: {'Content-Type': undefined},
                     processData: false,
                     contentType: false,
-                    dataType : 'json',
+                    dataType: 'json',
                     mimeType: "multipart/form-data",
 
                 }
