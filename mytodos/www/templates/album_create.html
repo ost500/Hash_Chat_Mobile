@@ -1,5 +1,6 @@
 <ion-view view-title="#{{titleName}}" ng-controller="AlbumDetailCtrl">
     <ion-content>
+        <form id="postForm">
         <div class="list">
 
             <div class="item item-avatar">
@@ -24,7 +25,7 @@
                     그림 선택
                 </div>
 
-                <input type="file" accept="image/*;capture=camera">
+                <input id="pictures" ng-file="create_data.picture" name="picture" type="file" accept="image/*;capture=camera">
 
             </div>
 
@@ -44,5 +45,6 @@
                 </button>
             </div>
         </div>
+        </form>
     </ion-content>
 </ion-view>

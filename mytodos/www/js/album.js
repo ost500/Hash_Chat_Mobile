@@ -142,13 +142,15 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
             $scope.create_data = {
                 message: "",
-                hashtag: "#" + tag
+                hashtag: "#" + tag,
+                picture: ""
             };
         });
 
         $scope.create_data = {
             message: "",
-            hashtag: "#" + tag
+            hashtag: "#" + tag,
+            picture: ""
         };
 
         $scope.profile_data = {};
@@ -188,15 +190,31 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         };
 
+
+
+
+
         $scope.submit = function () {
 
+            var formData = new FormData($("#postForm")[0]);
+            // formData.append('picture', $scope.create_data.picture);
+            formData.append('message', $scope.create_data.message);
+            formData.append('hashtag', $scope.create_data.hashtag);
+
             console.log($scope.create_data);
+            console.log($scope.create_data.picture);
+            console.log(formData.picture);
 
+            $http.post('api/api/posts',
+                formData, {
+                    headers: {'Content-Type': undefined},
+                    processData: false,
+                    contentType: false,
+                    dataType : 'json',
+                    mimeType: "multipart/form-data",
 
-            $http.post('http://52.78.208.21/api/posts',
-
-                $scope.create_data
-                )
+                }
+            )
                 .success(function (response) {
                     console.log(response);
 
