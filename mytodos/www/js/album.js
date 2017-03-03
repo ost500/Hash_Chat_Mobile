@@ -251,7 +251,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     })
 
 
-    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate,$cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet) {
+    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet) {
         $scope.post = "";
         var tag = ListData.get_tag();
 
@@ -454,7 +454,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                 })
         };
 
-        $scope.pathForImage = function(image) {
+        $scope.pathForImage = function (image) {
             if (image === null) {
                 return '';
             } else {
@@ -462,26 +462,32 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             }
         };
 
-        $scope.uploadImage = function() {
+        $scope.uploadImage = function () {
             // Destination URL
-            var url = "http://localhost:8888/upload.php";
+            var url = "http://52.78.208.21/api/posts" + '?api_token=' + LoginData.get().api_token;
 
             // File for Upload
             var targetPath = $scope.pathForImage($scope.image);
 
             // File name only
-            var filename = $scope.image;;
+            var filename = $scope.image;
+
 
             var options = {
-                fileKey: "file",
+                fileKey: "picture",
                 fileName: filename,
                 chunkedMode: false,
                 mimeType: "multipart/form-data",
-                params : {'fileName': filename}
+                params: {
+
+                    'message': $scope.create_data.message,
+                    'hashtag': $scope.create_data.hashtag
+                }
             };
 
-            $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
-                $scope.showAlert('Success', 'Image upload finished.');
+            $cordovaFileTransfer.upload(url, targetPath, options).then(function (result) {
+
+                $location.path('/tab/album/');
             });
         }
 
