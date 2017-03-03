@@ -16,8 +16,9 @@
             <!--<div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">-->
             <div class="message">
 
-                <img ng-class="{other_img: message.api_token == my_api_token, chat_img:message.api_token != my_api_token}"
-                     src="http://52.78.208.21/img/ionic.png">
+                <img ng-src="{{'http://52.78.208.21/' + message.picture}}" ng-class="{other_img: message.api_token == my_api_token, chat_img:message.api_token != my_api_token}">
+
+
                 <div class="message_user_name">{{ message.user_name }}</div>
 
                 <span class="msg">{{ message.text }}</span>

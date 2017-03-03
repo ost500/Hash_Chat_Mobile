@@ -206,9 +206,6 @@ angular.module('mytodos',
     })
 
 
-    
-
-
     .controller('MyCtrl', function ($scope, $location) {
         $scope.myGoBack = function () {
 
@@ -220,9 +217,12 @@ angular.module('mytodos',
 
     .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate) {
 
+        
         var login_data = LoginData.get();
         $scope.name = login_data.name;
         $scope.email = login_data.email;
+        $scope.picture = login_data.picture;
+
 
         console.log('setting hihi');
         $scope.login_or_profile = function () {
