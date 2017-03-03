@@ -77,6 +77,9 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope, LoginData, $ionicPopup) {
         $scope.post = "";
         $scope.like = "";
+        $scope.comments = [];
+
+        var page = 1;
 
         $scope.moreDataCanBeLoaded = true;
 
@@ -87,7 +90,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             $http.get('http://52.78.208.21/api/each_post/' + id + '?api_token=' + LoginData.get().api_token)
                 .success(function (response) {
                     var post;
-                    $scope.moreDataCanBeLoaded = false;
+                    // $scope.moreDataCanBeLoaded = false;
                     post = response;
                     callback(post);
 
@@ -95,22 +98,51 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                 });
         }
 
+        function commentsLoad(id, callback) {
+            $http.get('http://52.78.208.21/api/comments/' + id + '?page=' + page)
+                .success(function (response) {
+                    var comments = [];
+
+                    if (response.length === 0) {
+                        $scope.moreDataCanBeLoaded = false;
+                    }
+
+                    angular.forEach(response, function (data) {
+                        console.log(data);
+                        comments.push(data);
+                    });
+
+
+                    callback(comments);
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+        }
+
         $scope.loadNew = function () {
-            $scope.moreDataCanBeLoaded = true;
-            loadList($stateParams.id, function (newData) {
-                $scope.post = newData[0];
-                console.log(newData[0]);
-            });
+
+
         };
 
 
         $scope.loadMore = function () {
             console.log('hi');
-            loadList($stateParams.id, function (data) {
-                $scope.post = data[0];
-                $scope.like = data[1]["like"];
+            if (page == 1) {
 
-                $scope.$broadcast('scroll.infiniteScrollComplete');
+                loadList($stateParams.id, function (data) {
+                    $scope.post = data[0];
+                    $scope.like = data[1]["like"];
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+            }
+
+            commentsLoad($stateParams.id, function (newData) {
+                page = page + 1;
+                $scope.comments = $scope.comments.concat(newData);
+                console.log(newData);
+
+
             });
 
         };

@@ -1,3 +1,4 @@
+<script src="../js/album.js"></script>
 <script src="../js/list.js"></script>
 <ion-view view-title="#{{titleName}}" ng-controller="AlbumDetailCtrl">
 
@@ -28,9 +29,8 @@
                 </p>
             </div>
 
-
-            <a ng-repeat="comment in post.comments" class="item item-avatar" href="#">
-                <img src="img/ionic.png">
+            <a ng-repeat="comment in comments" class="item item-avatar" href="#">
+                <img ng-src="{{'http://52.78.208.21/' + comment.users.picture}}">
                 <h2>{{ comment.users.name}}</h2>
                 <p>{{ comment.users.email}}</p>
                 <h3 style="white-space: normal">{{ comment.message }}</h3>
