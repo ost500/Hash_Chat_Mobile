@@ -4,6 +4,10 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $ionicNavBarDelegate.showBackButton(false);
 
+        var tag = ListData.get_tag();
+
+        $scope.titleName = tag;
+
         $scope.posts = [];
 
         var page = 1;
@@ -12,7 +16,11 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         function loadList(page, callback) {
             var tag = ListData.get_tag();
+
+            $scope.titleName = tag;
+
             console.log(tag);
+
             $http.get('http://52.78.208.21/api/posts?tag=' + tag + '&page=' + page)
                 .success(function (response) {
                     var posts = [];
@@ -33,6 +41,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
             $scope.titleName = tag;
 
+            console.log("album " + tag);
+
             page = 1;
             $scope.moreDataCanBeLoaded = true;
 
@@ -41,7 +51,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             });
         };
 
-        $scope.$on('$ionicView.enter', function () {
+        $scope.$on('$ionicNavView.enter', function () {
+            console.log("album on");
             $scope.loadNew();
         });
 
@@ -71,6 +82,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         }
 
 
+        $scope.titleName = tag;
     })
 
 

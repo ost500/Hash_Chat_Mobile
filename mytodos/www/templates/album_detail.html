@@ -29,6 +29,16 @@
                 </p>
             </div>
 
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input style="width:100%" type="text" placeholder="Email">
+                </label>
+                <button class="button button-small">
+                    Submit
+                </button>
+            </div>
+
+
             <a ng-repeat="comment in comments" class="item item-avatar" href="#">
                 <img ng-src="{{'http://52.78.208.21/' + comment.users.picture}}">
                 <h2>{{ comment.users.name}}</h2>
