@@ -97,7 +97,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $scope.loadNew = function () {
             $scope.moreDataCanBeLoaded = true;
             loadList($stateParams.id, function (newData) {
-                $scope.post = newData;
+                $scope.post = newData[0];
+                console.log(newData[0]);
             });
         };
 
@@ -105,8 +106,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $scope.loadMore = function () {
             console.log('hi');
             loadList($stateParams.id, function (data) {
-                $scope.post = data;
-                console.log(data);
+                $scope.post = data[0];
+                console.log(data[1]);
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
 
