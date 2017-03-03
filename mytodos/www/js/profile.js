@@ -9,7 +9,7 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
 
         $scope.profile_data.name = login_data.name;
         $scope.profile_data.email = login_data.email;
-        $scope.profile_data.profile_image = login_data.profile_image;
+        $scope.profile_data.picture = login_data.picture;
         $scope.profile_data.loggedin = login_data.loggedin;
 
 

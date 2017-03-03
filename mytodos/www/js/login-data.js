@@ -13,6 +13,9 @@ angular.module('mytodos.login-data', [])
         if(login_data.loggedin == undefined){
             login_data.loggedin = 0;
         }
+        if(login_data.picture == undefined){
+            login_data.picture = "image/default.png";
+        }
 
         function saveToStorage(login_val) {
             window.localStorage["login-user"]  = angular.toJson(login_data);
@@ -41,6 +44,7 @@ angular.module('mytodos.login-data', [])
                 login_data.email = "Anonymouse@osteng.com";
                 login_data.api_token = Math.random().toString(36).substring(7);
                 login_data.loggedin = 0;
+                login_data.picture = "image/default.png";
                 saveToStorage();
             },
             move: function (todo, fromIndex, toIndex) {

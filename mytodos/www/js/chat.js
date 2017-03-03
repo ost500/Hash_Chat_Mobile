@@ -39,7 +39,8 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
                     user_name: LoginData.get().name,
                     text: $scope.data.message,
                     hash_tag: $scope.hash_tag,
-                    api_token: LoginData.get().api_token
+                    api_token: LoginData.get().api_token,
+                    picture: LoginData.get().picture
                 });
 
                 $scope.inputDown();
