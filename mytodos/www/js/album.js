@@ -146,6 +146,11 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             };
         });
 
+        $scope.create_data = {
+            message: "",
+            hashtag: "#" + tag
+        };
+
         $scope.profile_data = {};
 
         $scope.profile_data.name = login_data.name;
@@ -187,25 +192,20 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
             console.log($scope.create_data);
 
-            $http({
-                method: 'POST',
-                url: 'http://52.78.208.21/api/posts/',
-                data: $.param({
-                    message: $scope.create_data.message,
-                    hashtag: $scope.create_data.hashtag
-                }),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                }
-            }).success(function (response) {
-                console.log(response);
 
-                $scope.create_data.message = "";
-                $scope.create_data.hashtag = "#" + tag;
+            $http.post('http://52.78.208.21/api/posts',
 
-                $location.path('/tab/album_detail/' + response.id);
+                $scope.create_data
+                )
+                .success(function (response) {
+                    console.log(response);
 
-            }).error(function (response) {
+                    $scope.create_data.message = "";
+                    $scope.create_data.hashtag = "#" + tag;
+
+                    $location.path('/tab/album_detail/' + response.id);
+
+                }).error(function (response) {
                 console.log(response);
 
                 var error_message = "";
