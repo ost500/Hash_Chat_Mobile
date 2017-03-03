@@ -169,7 +169,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             console.log('like function');
             console.log(LoginData.get().api_token);
 
-            $http.post('api/api/like/' + $scope.post.id + '?api_token=' + LoginData.get().api_token, {})
+            $http.post('http://52.78.208.21/api/like/' + $scope.post.id + '?api_token=' + LoginData.get().api_token, {})
                 .success(function (response) {
                     console.log(response);
 
@@ -203,7 +203,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $scope.commentSubmit = function () {
             console.log($scope.commentInput.data);
-            $http.post('api/api/comments/' + $stateParams.id + '?api_token=' + LoginData.get().api_token,
+            $http.post('http://52.78.208.21/api/comments/' + $stateParams.id + '?api_token=' + LoginData.get().api_token,
                 $scope.commentInput)
                 .success(function (response) {
                     page = 1;
@@ -226,7 +226,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $scope.deleteComment = function (id) {
             console.log(id);
-            $http.delete('api/api/comments/' + id + '?api_token=' + LoginData.get().api_token,
+            $http.delete('http://52.78.208.21/api/comments/' + id + '?api_token=' + LoginData.get().api_token,
                 {})
                 .success(function (response) {
                     page = 1;
@@ -331,7 +331,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             console.log($scope.create_data.picture);
             console.log(formData.picture);
 
-            $http.post('api/api/posts' + '?api_token=' + LoginData.get().api_token,
+            $http.post('http://52.78.208.21/api/posts' + '?api_token=' + LoginData.get().api_token,
                 formData, {
                     headers: {'Content-Type': undefined},
                     processData: false,
