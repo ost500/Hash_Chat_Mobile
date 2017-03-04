@@ -251,7 +251,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     })
 
 
-    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet) {
+    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet, $ionicLoading) {
         $scope.post = "";
         var tag = ListData.get_tag();
 
@@ -385,8 +385,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $scope.loadImage = function () {
             var options = {
-                title: 'Select Image Source',
-                buttonLabels: ['Load from Library', 'Use Camera'],
+                title: '사진',
+                buttonLabels: ['사진 가져오기', '사진 촬영하기'],
                 addCancelButtonWithLabel: 'Cancel',
                 androidEnableCancelButton: true,
             };
@@ -463,6 +463,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         };
 
         $scope.uploadImage = function () {
+            $scope.show();
             // Destination URL
             var url = "http://52.78.208.21/api/posts" + '?api_token=' + LoginData.get().api_token;
 
@@ -486,10 +487,26 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             };
 
             $cordovaFileTransfer.upload(url, targetPath, options).then(function (result) {
+                $scope.pathForImage(null);
+                $scope.hide();
+                $location.path('/tab/album');
 
-                $location.path('/tab/album/');
             });
-        }
+        };
 
+
+        $scope.show = function() {
+            $ionicLoading.show({
+                template: '사진을 올리는 중 입니다...',
+                duration: 30000
+            }).then(function(){
+                console.log("The loading indicator is now displayed");
+            });
+        };
+        $scope.hide = function(){
+            $ionicLoading.hide().then(function(){
+                console.log("The loading indicator is now hidden");
+            });
+        };
 
     });
