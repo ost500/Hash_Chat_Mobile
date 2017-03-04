@@ -467,8 +467,6 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             // Destination URL
             var url = "http://52.78.208.21/api/posts" + '?api_token=' + LoginData.get().api_token;
 
-            // File for Upload
-            var targetPath = $scope.pathForImage($scope.image);
 
             // File name only
             var filename = $scope.image;
@@ -485,26 +483,95 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     'hashtag': $scope.create_data.hashtag
                 }
             };
+            console.log('before if else');
+            if ($scope.image == null) {
+                console.log('targetPath == null');
+                $http.post('http://52.78.208.21/api/posts' + '?api_token=' + LoginData.get().api_token,
+                    options.params
+                    )
+                    .success(function (response) {
+                        console.log(response);
+                        $scope.hide();
+                        $scope.create_data.message = "";
+                        $scope.create_data.hashtag = "#" + tag;
 
-            $cordovaFileTransfer.upload(url, targetPath, options).then(function (result) {
-                $scope.pathForImage(null);
-                $scope.hide();
-                $location.path('/tab/album');
+                        $location.path('/tab/album');
 
-            });
+                    }).error(function (response) {
+                    console.log(response);
+
+                    var error_message = "";
+
+                    if (response.message) {
+                        error_message = error_message + response.message;
+                    }
+
+                    if (response.hashtag) {
+                        if (response.message) {
+                            error_message = error_message + "<br>";
+                        }
+                        error_message = error_message + response.hashtag;
+                    }
+
+                    $scope.hide();
+
+                    $ionicPopup.alert({
+                        title: "에러",
+                        template: error_message
+                    });
+
+                });
+
+
+            } else {
+
+                // File for Upload
+                var targetPath = $scope.pathForImage($scope.image);
+
+
+                console.log('targetPath != null');
+                $cordovaFileTransfer.upload(url, targetPath, options).then(function (result) {
+                    $scope.pathForImage(null);
+                    $scope.hide();
+                    $location.path('/tab/album');
+                }, function (error) {
+                    console.log(error);
+
+                    var error_message = "";
+
+                    if (error["message"] != undefined) {
+                        error_message = error_message + error.body;
+                    }
+
+                    if (error["hashtag"] != undefined) {
+                        if (error.message) {
+                            error_message = error_message + "<br>";
+                        }
+                        error_message = error_message + error.hashtag;
+                    }
+
+                    $scope.hide();
+
+                    $ionicPopup.alert({
+                        title: "에러",
+                        template: error_message
+                    });
+                });
+            }
+
         };
 
 
-        $scope.show = function() {
+        $scope.show = function () {
             $ionicLoading.show({
-                template: '사진을 올리는 중 입니다...',
+                template: '게시물을 올리는 중 입니다...',
                 duration: 30000
-            }).then(function(){
+            }).then(function () {
                 console.log("The loading indicator is now displayed");
             });
         };
-        $scope.hide = function(){
-            $ionicLoading.hide().then(function(){
+        $scope.hide = function () {
+            $ionicLoading.hide().then(function () {
                 console.log("The loading indicator is now hidden");
             });
         };
