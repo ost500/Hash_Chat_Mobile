@@ -14,7 +14,7 @@ angular.module('mytodos.login-data', [])
             login_data.loggedin = 0;
         }
         if(login_data.picture == undefined){
-            login_data.picture = "image/default.png";
+            login_data.picture = "profile_picture/default.png";
         }
 
         function saveToStorage(login_val) {

@@ -6,7 +6,6 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         $scope.hash_tag = ListData.get_tag();
 
 
-
         $scope.sending = false;
 
 
@@ -40,7 +39,8 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
                     text: $scope.data.message,
                     hash_tag: $scope.hash_tag,
                     api_token: LoginData.get().api_token,
-                    picture: LoginData.get().picture
+                    picture: LoginData.get().picture,
+                    created_at: Date.now()
                 });
 
                 $scope.inputDown();
@@ -57,19 +57,22 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
         $scope.$watchCollection('chats', function () {
             console.log('watch');
-            $ionicScrollDelegate.scrollBottom(true);
+            if ($location.url() == '/tab/chat') {
+                $ionicScrollDelegate.scrollBottom(true);
+            }
         });
 
 
-        $scope.$on('$ionicView.enter', function()
-        {
+        $scope.$on('$ionicView.enter', function () {
 
             $scope.titleName = ListData.get_tag();
             $scope.hash_tag = ListData.get_tag();
 
             var ref = new Firebase('https://hashchat-e36db.firebaseio.com');
+            var minutes = 1000 * 60;
+            var hours = minutes * 60;
 
-            var sync = $firebase(ref.child('chat').child($scope.hash_tag));
+            var sync = $firebase(ref.child('chat').child($scope.hash_tag).orderByChild("created_at").startAt(Date.now() - (12 * hours)));
 
             $scope.chats = sync.$asArray();
         });
