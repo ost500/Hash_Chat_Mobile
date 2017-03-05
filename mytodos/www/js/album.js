@@ -97,6 +97,9 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $scope.shouldShowReorder = false;
         $scope.listCanSwipe = true;
 
+        $scope.mine = false;
+
+
         var page = 1;
 
         $scope.moreDataCanBeLoaded = true;
@@ -152,6 +155,12 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     $scope.like = data[1]["like"];
 
                     $scope.$broadcast('scroll.infiniteScrollComplete');
+                    console.log($scope.profile_data);
+                    console.log($scope.post.user_id);
+                    if ($scope.profile_data.user_id == $scope.post.user_id ||
+                        $scope.profile_data.api_token === $scope.post.api_token) {
+                        $scope.mine = true;
+                    }
                 });
             }
 

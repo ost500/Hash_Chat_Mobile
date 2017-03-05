@@ -1,4 +1,3 @@
-
 <ion-view view-title="#{{titleName}}" ng-controller="AlbumDetailCtrl">
 
     <ion-content>
@@ -9,11 +8,22 @@
 
         <div class="list">
 
-            <div class="item item-avatar">
-                <img src="img/ionic.png">
-                <h2>{{ post.users.name }}</h2>
-                <p>{{ post.created_at }}</p>
-            </div>
+
+                <div class="item item-avatar">
+
+                    <img src="{{'http://52.78.208.21/'+post.users.picture}}">
+                    <button ng-if="mine" style="color:#ef473a; float:right" class="ion-minus-circled button icon button-icon ng-binding">
+                    </button>
+                    <h2>{{ post.users.name }}</h2>
+                    <p>{{ post.created_at }}</p>
+
+                </div>
+
+
+
+
+
+
 
             <div class="item item-body">
                 <img class="full-image" ng-src="{{'http://52.78.208.21/'+post.picture}}">
