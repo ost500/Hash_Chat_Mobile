@@ -18,6 +18,10 @@
     {
       "path": "/test_api",
       "proxyUrl": "http://hashchat.app/"
+    },
+    {
+      "path": "http://52.78.208.21/",
+      "proxyUrl": "http://52.78.208.21/"
     }
   ]
 }

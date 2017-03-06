@@ -1,5 +1,5 @@
 angular.module('mytodos.album', ['mytodos.list-data'])
-    .controller('AlbumCtrl', function ($scope, ListData, $stateParams, $location, $http, $ionicNavBarDelegate) {
+    .controller('AlbumCtrl', function ($scope, ListData, $stateParams, $location, $http, $ionicNavBarDelegate, $rootScope) {
         console.log($location.url());
 
         $ionicNavBarDelegate.showBackButton(false);
@@ -87,6 +87,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
 
     .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope, LoginData, $ionicPopup) {
+
+
         $scope.post = "";
         $scope.like = "";
         $scope.comments = [];
@@ -257,10 +259,48 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         };
 
+
+        $scope.destroy = function () {
+            console.log('ddd');
+
+            var confirmPopup = $ionicPopup.confirm({
+                title: '삭제',
+                template: '삭제 하시겠습니까?',
+                buttons: [{ // Array[Object] (optional). Buttons to place in the popup footer.
+                    text: '삭제',
+                    type: 'button-positive',
+                    onTap: function (e) {
+                        $http.delete('api/api/posts/' + $stateParams.id + '?api_token=' + LoginData.get().api_token,
+                            {})
+                            .success(function (response) {
+
+                                $location.path('/tab/album');
+
+                            }).error(function (response) {
+
+                            $ionicPopup.alert({
+                                title: "에러",
+                                template: response
+                            });
+                        });
+                    }
+                }, {
+                    text: '취소',
+                    type: 'button-default',
+                    onTap: function (e) {
+
+                    }
+                }]
+            });
+
+
+        }
+
+
     })
 
 
-    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet, $ionicLoading) {
+    .controller('AlbumCreateCtrl', function ($scope, $location, $stateParams, $http, LoginData, $ionicPopup, ListData, $ionicNavBarDelegate, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet, $ionicLoading, $rootScope) {
         $scope.post = "";
         var tag = ListData.get_tag();
 

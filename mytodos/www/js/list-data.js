@@ -1,9 +1,10 @@
 angular.module('mytodos.list-data', [])
-    .factory('ListData', function ($http) {
+    .factory('ListData', function ($http, $rootScope) {
 
         var page = 1;
         posts = [];
         var tag = '수원대학교';
+        $rootScope.url = 'api/';
 
         return {
             get: function () {

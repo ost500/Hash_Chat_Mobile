@@ -12,7 +12,7 @@
                 <div class="item item-avatar">
 
                     <img src="{{'http://52.78.208.21/'+post.users.picture}}">
-                    <button ng-if="mine" style="color:#ef473a; float:right" class="ion-minus-circled button icon button-icon ng-binding">
+                    <button ng-click="destroy()" ng-if="mine" style="color:#ef473a; float:right" class="ion-minus-circled button icon button-icon ng-binding">
                     </button>
                     <h2>{{ post.users.name }}</h2>
                     <p>{{ post.created_at }}</p>
