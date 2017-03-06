@@ -2,10 +2,7 @@
 <ion-view cache-view="false" view-title="#{{titleName}}" ng-controller="AlbumCtrl">
 
     <ion-content>
-        <ion-refresher
-                pulling-text="새로고침"
-                on-refresh="loadNew()">
-        </ion-refresher>
+
 
         <div class="list">
 
@@ -28,8 +25,13 @@
                         {{post.message}}
                     </p>
                     <p>
-                        <a href="#" class="subdued">{{post.likes_count}} Like</a>
-                        <a href="#" class="subdued">{{post.comments_count}} Comments</a>
+                        <a ng-if="hash_tag.tag != ''" ng-repeat="hash_tag in post.hash_tags">
+                            #{{hash_tag.tag+' '}}
+                        </a>
+                    </p>
+                    <p>
+                        <a class="subdued">{{post.likes_count}} Like</a>
+                        <a class="subdued">{{post.comments_count}} Comments</a>
                     </p>
                 </div>
 

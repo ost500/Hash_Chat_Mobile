@@ -215,13 +215,14 @@ angular.module('mytodos',
     })
 
 
-    .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate) {
+    .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate, $http) {
 
 
         var login_data = LoginData.get();
         $scope.name = login_data.name;
         $scope.email = login_data.email;
         $scope.picture = login_data.picture;
+
 
 
         console.log('setting hihi');
@@ -237,6 +238,54 @@ angular.module('mytodos',
         console.log($location.path());
 
         $ionicNavBarDelegate.showBackButton(false);
+
+
+        var page = 1;
+        $scope.posts = [];
+        $scope.moreDataCanBeLoaded = true;
+
+        function loadList(page, callback) {
+            console.log('http://52.78.208.21/api/my_posts?page=' + page);
+            $http.get('http://52.78.208.21/api/my_posts?page=' + page + '&api_token=' + login_data.api_token)
+                .success(function (response) {
+                    var posts = [];
+                    if (response.length === 0) {
+                        $scope.moreDataCanBeLoaded = false;
+                    }
+                    angular.forEach(response, function (data) {
+                        console.log(data);
+                        posts.push(data);
+                    });
+                    callback(posts);
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+        }
+
+        $scope.loadNew = function () {
+
+            page = 1;
+            $scope.moreDataCanBeLoaded = true;
+
+            loadList(page, function (newData) {
+                $scope.posts = newData;
+            });
+        };
+
+        $scope.loadMore = function () {
+            console.log($scope.posts.length);
+            if ($scope.posts.length > 0) {
+                page = page + 1;
+            }
+            console.log(page);
+            if ($scope.moreDataCanBeLoaded) {
+                loadList(page, function (moreData) {
+                    $scope.posts = $scope.posts.concat(moreData);
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+            }
+
+
+        };
 
 
     })

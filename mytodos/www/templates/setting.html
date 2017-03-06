@@ -24,32 +24,47 @@
                 내가 올린 글
             </div>
 
-            <div class="list card">
+            <ion-refresher
+                    pulling-text="새로고침"
+                    on-refresh="loadNew()">
+            </ion-refresher>
 
-                <div class="item item-avatar">
+            <div class="list">
 
-                    <img src="img/ionic.png">
-                    <h2>Marty McFly</h2>
-                    <p>November 05, 1955</p>
-                </div>
+                <div ng-click="album_detail(post.id)" class="card" ng-repeat="post in posts">
 
-                <div class="item item-body">
-                    <img class="full-image" src="img/ionic.png">
-                    <p>
-                        This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-                        the content is from a card-body consisting of an image and paragraph text. The footer
-                        consists of tabs, icons aligned left, within the card-footer.
-                    </p>
-                    <p>
-                        <a href="#" class="subdued">1 Like</a>
-                        <a href="#" class="subdued">5 Comments</a>
-                    </p>
+                    <div class="item item-avatar">
+                        <img ng-src="{{'http://52.78.208.21/'+post.users.picture}}">
+                        <h2>{{post.users.name}}</h2>
+                        <p>{{post.created_at}}</p>
+                        <p>{{post.users.email}}</p>
+                    </div>
+
+                    <div class="item item-body">
+                        <img class="full-image" ng-src="{{'http://52.78.208.21/'+post.picture}}">
+                        <p>
+                            {{post.message}}
+                        </p>
+                        <p>
+                            <a ng-if="hash_tag.tag != ''" ng-repeat="hash_tag in post.hash_tags">
+                                #{{hash_tag.tag+' '}}
+                            </a>
+                        </p>
+                        <p>
+                            <a class="subdued">{{post.likes_count}} Like</a>
+                            <a class="subdued">{{post.comments_count}} Comments</a>
+                        </p>
+                    </div>
+
                 </div>
 
 
             </div>
 
-            </div>
+            <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="moreDataCanBeLoaded">
+            </ion-infinite-scroll>
+
+
         </a>
 
     </ion-content>
