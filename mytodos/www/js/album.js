@@ -10,7 +10,9 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $scope.posts = [];
 
-        var page = 1;
+        if (!$rootScope.page) {
+            $rootScope.page = 1;
+        }
 
         $scope.moreDataCanBeLoaded = true;
 
@@ -20,7 +22,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             $scope.titleName = tag;
 
             console.log(tag);
-
+            console.log('http://52.78.208.21/api/my_posts?page=' + page);
             $http.get('http://52.78.208.21/api/posts?tag=' + tag + '&page=' + page)
                 .success(function (response) {
                     var posts = [];
@@ -29,9 +31,12 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     }
                     angular.forEach(response, function (data) {
                         console.log(data);
+
                         posts.push(data);
+
                     });
                     callback(posts);
+                    $scope.$broadcast('scroll.refreshComplete');
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 });
         }
@@ -43,27 +48,27 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
             console.log("album " + tag);
 
-            page = 1;
+
+            $rootScope.page = 1;
+
+
             $scope.moreDataCanBeLoaded = true;
 
-            loadList(page, function (newData) {
+            loadList($rootScope.page, function (newData) {
                 $scope.posts = newData;
             });
         };
 
-        $scope.$on('$ionicNavView.enter', function () {
-            console.log("album on");
-            $scope.loadNew();
-        });
+
 
 
         $scope.loadMore = function () {
             console.log($scope.posts.length);
             if ($scope.posts.length > 0) {
-                page = page + 1;
+                $rootScope.page = $rootScope.page + 1;
             }
-            console.log(page);
-            loadList(page, function (moreData) {
+            console.log($rootScope.page);
+            loadList($rootScope.page, function (moreData) {
                 $scope.posts = $scope.posts.concat(moreData);
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
@@ -72,6 +77,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $scope.album_detail = function (id) {
             console.log("album_detail");
+
             console.log($stateParams.article_id);
             $location.path('/tab/album_detail/' + id);
         };
@@ -79,7 +85,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $scope.write = function () {
             console.log("Create Click");
             $location.path('/tab/album_create');
-        }
+        };
 
 
         $scope.titleName = tag;
@@ -116,7 +122,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     // $scope.moreDataCanBeLoaded = false;
                     post = response;
                     callback(post);
-
+                    $scope.$broadcast('scroll.refreshComplete');
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 });
         }
@@ -270,7 +276,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     text: '삭제',
                     type: 'button-positive',
                     onTap: function (e) {
-                        $http.delete('api/api/posts/' + $stateParams.id + '?api_token=' + LoginData.get().api_token,
+                        $http.delete('http://52.78.208.21/api/posts/' + $stateParams.id + '?api_token=' + LoginData.get().api_token,
                             {})
                             .success(function (response) {
 
@@ -535,7 +541,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             console.log('before if else');
             if ($scope.image == null) {
                 console.log('targetPath == null');
-                $http.post('http://52.78.208.21/api/posts' + '?api_token=' + LoginData.get().api_token,
+                $http.post(url,
                     options.params
                     )
                     .success(function (response) {

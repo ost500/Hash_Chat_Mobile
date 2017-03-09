@@ -2,7 +2,10 @@
 <ion-view cache-view="false" view-title="#{{titleName}}" ng-controller="AlbumCtrl">
 
     <ion-content>
-
+        <ion-refresher
+                pulling-text="새로고침"
+                on-refresh="loadNew()">
+        </ion-refresher>
 
         <div class="list">
 

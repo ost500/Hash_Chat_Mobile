@@ -3,6 +3,8 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
     .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData) {
 
+        
+
         $scope.hash_tag = ListData.get_tag();
 
 
@@ -14,6 +16,7 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         var alternate,
             isIOS = ionic.Platform.isWebView() && ionic.Platform.isIOS();
         ionic.Platform.isFullScreen = true;
+
 
         $scope.sendMessage = function () {
 
@@ -68,7 +71,7 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
             $scope.titleName = ListData.get_tag();
             $scope.hash_tag = ListData.get_tag();
 
-            var ref = new Firebase('https://hashchat-e36db.firebaseio.com');
+            var ref = new Firebase('https://mindletter-e953e.firebaseio.com');
             var minutes = 1000 * 60;
             var hours = minutes * 60;
 

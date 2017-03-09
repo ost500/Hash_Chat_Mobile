@@ -223,6 +223,11 @@ angular.module('mytodos',
         $scope.email = login_data.email;
         $scope.picture = login_data.picture;
 
+        $scope.album_detail = function (id) {
+            
+            $location.path('/tab/album_detail/' + id);
+        };
+
 
 
         console.log('setting hihi');
