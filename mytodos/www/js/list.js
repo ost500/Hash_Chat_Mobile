@@ -1,5 +1,5 @@
 angular.module('mytodos.list', ['mytodos.list-data'])
-    .controller('ListCtrl', function ($http, $scope, ListData) {
+    .controller('ListCtrl', function ($http, $scope, ListData, $ionicPopup) {
 
 
         var tag = ListData.get_tag();
@@ -78,6 +78,11 @@ angular.module('mytodos.list', ['mytodos.list-data'])
                     console.log($scope.picture);
 
                 });
-        }
+            $ionicPopup.alert({
+                title: "#" + newTag,
+                template: "해시태그를 변경했습니다"
+            });
+        };
+
 
     });

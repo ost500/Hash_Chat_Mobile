@@ -78,6 +78,9 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
             var sync = $firebase(ref.child('chat').child($scope.hash_tag).orderByChild("created_at").startAt(Date.now() - (12 * hours)));
 
             $scope.chats = sync.$asArray();
+
+            $scope.my_api_token = LoginData.get().api_token;
+            $scope.my_user_name = LoginData.get().name;
         });
 
         // (3-3) 수신된 메시지 처리

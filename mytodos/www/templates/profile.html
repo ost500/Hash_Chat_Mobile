@@ -1,3 +1,5 @@
+
+<script src="../js/login-data.js"></script>
 <ion-view view-title="목록" ng-controller="ProfileCtrl">
 
 
@@ -24,11 +26,17 @@
             <label class="item item-input item-stacked-label">
                 <span class="input-label">프로필 사진</span>
                 <br>
-                <img ng-src="{{'http://52.78.208.21/'+profile_data.picture}}">
+                <button class="button icon-left ion-camera" ng-click="loadImage()">사진 등록</button>
+
+                <!--<input id="pictures" ng-click="getImage()" ng-file="create_data.picture" name="picture" type="file" accept="image/*;capture=camera">-->
+                <br>
+                <img ng-if="new_image_there" style="width:50%" ng-src="{{pathForImage(image)}}">
+                <br>
+                <img ng-if="!new_image_there" style="width:50%" ng-src="{{'http://52.78.208.21/'+profile_data.picture}}">
             </label>
 
             <div class="padding">
-                <button type="submit" class="button button-block button-positive" ng-click="edit()">수정</button>
+                <button type="submit" class="button button-block button-positive" ng-click="uploadImage()">수정</button>
             </div>
             <div ng-if="profile_data.loggedin" class="padding">
                 <button class="button button-block button-assertive" ng-click="logout()">로그아웃</button>

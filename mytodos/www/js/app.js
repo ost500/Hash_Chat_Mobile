@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('mytodos',
     ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register', 'mytodos.profile',
-        'mytodos.list', 'mytodos.album', 'firebase'])
+        'mytodos.list', 'mytodos.album', 'firebase', 'ngCordova'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
@@ -228,6 +228,14 @@ angular.module('mytodos',
             $location.path('/tab/album_detail/' + id);
         };
 
+
+        $scope.$on('$ionicView.enter', function () {
+            var login_data = LoginData.get();
+            $scope.name = login_data.name;
+            $scope.email = login_data.email;
+            $scope.picture = login_data.picture;
+
+        });
 
 
         console.log('setting hihi');

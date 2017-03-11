@@ -60,8 +60,6 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         };
 
 
-
-
         $scope.loadMore = function () {
             console.log($scope.posts.length);
             if ($scope.posts.length > 0) {
@@ -98,6 +96,9 @@ angular.module('mytodos.album', ['mytodos.list-data'])
         $scope.post = "";
         $scope.like = "";
         $scope.comments = [];
+        $scope.$on('$ionicView.enter', function () {
+            $scope.profile_data = LoginData.get();
+        });
         $scope.profile_data = LoginData.get();
         $scope.commentInput = {"data": ""};
 
@@ -319,6 +320,9 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         var login_data = LoginData.get();
         console.log(login_data);
+        $scope.$on('$ionicView.enter', function () {
+            $scope.profile_data = LoginData.get();
+        });
 
 
         $scope.$on('$ionicView.enter', function () {
@@ -395,7 +399,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                     mimeType: "multipart/form-data",
 
                 }
-                )
+            )
                 .success(function (response) {
                     console.log(response);
 
@@ -442,7 +446,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
             var options = {
                 title: '사진',
                 buttonLabels: ['사진 가져오기', '사진 촬영하기'],
-                addCancelButtonWithLabel: 'Cancel',
+                addCancelButtonWithLabel: '취소',
                 androidEnableCancelButton: true,
             };
             $cordovaActionSheet.show(options).then(function (btnIndex) {
@@ -543,7 +547,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                 console.log('targetPath == null');
                 $http.post(url,
                     options.params
-                    )
+                )
                     .success(function (response) {
                         console.log(response);
                         $scope.hide();

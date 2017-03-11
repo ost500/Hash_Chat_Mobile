@@ -21,7 +21,14 @@
     "cordova-plugin-console",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-camera",
+    "cordova-plugin-file",
+    "cordova-plugin-filepath",
+    "cordova-plugin-actionsheet",
+    "cordova-plugin-device",
+    "cordova-plugin-admobpro"
   ],
   "cordovaPlatforms": [
     "ios",
