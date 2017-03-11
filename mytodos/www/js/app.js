@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('mytodos',
     ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register', 'mytodos.profile',
-        'mytodos.list', 'mytodos.album', 'firebase', 'ngCordova'])
+        'mytodos.list', 'mytodos.album', 'firebase'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
