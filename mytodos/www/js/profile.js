@@ -6,6 +6,8 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                                          $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
                                          $cordovaDevice, $cordovaActionSheet, $ionicLoading) {
 
+
+        $ionicNavBarDelegate.showBackButton(true);
         var login_data = LoginData.get();
         console.log(login_data);
 

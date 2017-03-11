@@ -3,7 +3,8 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
     .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData) {
 
-        
+
+
 
         $scope.hash_tag = ListData.get_tag();
 
