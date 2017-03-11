@@ -15,12 +15,12 @@
             <div ng-if="$even" class="row">
                 <div class="col col-50">
                     <button ng-click="changeTag(hashtags[$index].tag)" class="button button-full button-stable">
-                        #{{ hashtags[$index].tag }}
+                        #{{ hashtags[$index].tag }} <span class="badge badge-positive">{{ hashtags[$index].posts_count }}</span>
                     </button>
                 </div>
                 <div ng-if="hashtags[$index+1].tag" class="col col-50">
                     <button ng-click="changeTag(hashtags[$index+1].tag)" class="button button-full button-stable">
-                        #{{ hashtags[$index+1].tag }}
+                        #{{ hashtags[$index+1].tag }} <span class="badge badge-positive">{{ hashtags[$index+1].posts_count }}</span>
                     </button>
                 </div>
             </div>
