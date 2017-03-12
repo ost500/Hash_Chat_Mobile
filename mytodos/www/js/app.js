@@ -12,13 +12,15 @@ angular.module('mytodos',
 
         $ionicConfigProvider.tabs.position('top');
 
+        $ionicConfigProvider.views.swipeBackEnabled(false);
+
         $stateProvider
 
             .state('tab', {
                 url: "/tab",
-                abstract: true,
+
                 templateUrl: "templates/tabs.html",
-                controller: 'SettingCtrl'
+                controller: 'TabCtrl'
             })
             .state('tab.search', {
                 url: '/list',
@@ -150,6 +152,56 @@ angular.module('mytodos',
 
     })
 
+
+    .controller('TabCtrl', function ($scope) {
+        $scope.network = false;
+
+        document.addEventListener("offline", function () {
+            $scope.network = true;
+            console.log('network false');
+        }, false);
+
+        document.addEventListener("online", function () {
+            $scope.network = false;
+            console.log('network true');
+
+            var admobid = {};
+            if (/(android)/i.test(navigator.userAgent)) { // for android & amazon-fireos
+                admobid = {
+                    banner: 'ca-app-pub-8665007420370986/5422744557', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                };
+            } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+                admobid = {
+                    banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-8665007420370986/1255276555'
+                };
+            } else { // for windows phone
+                admobid = {
+                    banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                };
+            }
+
+            if (window.AdMob) window.AdMob.createBanner({
+                adId: admobid.banner,
+                position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                autoShow: true
+            });
+
+            // preppare and load ad resource in background, e.g. at begining of game level
+            if (window.AdMob) window.AdMob.prepareInterstitial({
+                adId: admobid.interstitial,
+                autoShow: true
+            });
+
+            // show the interstitial later, e.g. at end of game level
+            if (window.AdMob) window.AdMob.showInterstitial();
+
+
+        }, true);
+
+    })
     .controller('LoginCtrl', function ($scope, $location, $ionicHistory, $ionicPopup, $ionicNavBarDelegate) {
         $scope.myGoBack = function () {
             console.log("go back");
@@ -306,7 +358,7 @@ angular.module('mytodos',
     })
 
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, $rootScope) {
         $ionicPlatform.ready(function () {
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -344,17 +396,19 @@ angular.module('mytodos',
             if (window.AdMob) window.AdMob.createBanner({
                 adId: admobid.banner,
                 position: AdMob.AD_POSITION.BOTTOM_CENTER,
-                autoShow: true
+                autoShow: true,
             });
 
             // preppare and load ad resource in background, e.g. at begining of game level
             if (window.AdMob) window.AdMob.prepareInterstitial({
                 adId: admobid.interstitial,
-                autoShow: true
+                autoShow: false
             });
 
-            // show the interstitial later, e.g. at end of game level
-            if (window.AdMob) window.AdMob.showInterstitial();
+            $rootScope.admob_interstitial_count = {
+                'album_visit': false,
+                'chat_visit': false
+            };
 
 
         });

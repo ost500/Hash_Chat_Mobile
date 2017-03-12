@@ -1,9 +1,51 @@
 angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
 
-    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData) {
+    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData, $rootScope, $cordovaAdMob, $cordovaMoPubAds) {
 
 
+        console.log('this is it' + $rootScope.admob_interstitial_count.chat_visit);
+
+
+        $scope.banner_margin = true;
+
+        window.addEventListener('native.keyboardshow', function () {
+            console.log('banner margin');
+            $scope.banner_margin = false;
+            console.log($scope.banner_margin);
+        });
+
+        window.addEventListener('native.keyboardhide', function () {
+            console.log('banner margin');
+            $scope.banner_margin = true;
+            console.log($scope.banner_margin);
+            $timeout(function () {
+                $ionicScrollDelegate.scrollBottom(true);
+            }, 300);
+        });
+
+
+        var ref;
+
+        $scope.loadNew = function () {
+            $scope.titleName = ListData.get_tag();
+            $scope.hash_tag = ListData.get_tag();
+
+            var ref = new Firebase('https://mindletter-e953e.firebaseio.com');
+            var minutes = 1000 * 60;
+            var hours = minutes * 60;
+
+            var sync = $firebase(ref.child('chat').child($scope.hash_tag).orderByChild("created_at").startAt(Date.now() - (12 * hours)));
+
+            $scope.chats = sync.$asArray();
+
+            $scope.my_api_token = LoginData.get().api_token;
+            $scope.my_user_name = LoginData.get().name;
+        };
+
+        if (ref == null) {
+            $scope.loadNew();
+        }
 
 
         $scope.hash_tag = ListData.get_tag();
@@ -66,23 +108,80 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
             }
         });
 
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            console.log(toState);
+            if (toState.url == '/chat') {
+                console.log('tab/chat came');
+                console.log('entered');
+                console.log('album_visit1 = ' + $rootScope.admob_interstitial_count.album_visit)
+                console.log('chatvisit1 = ' + $rootScope.admob_interstitial_count.chat_visit)
 
-        $scope.$on('$ionicView.enter', function () {
+                if (window.AdMob) {
+                    window.AdMob.removeBanner();
+                }
 
-            $scope.titleName = ListData.get_tag();
-            $scope.hash_tag = ListData.get_tag();
+                var admobid = {};
+                if (/(android)/i.test(navigator.userAgent)) { // for android & amazon-fireos
+                    admobid = {
+                        banner: 'ca-app-pub-8665007420370986/5422744557', // or DFP format "/6253334/dfp_example_ad"
+                        interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                    };
+                } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+                    admobid = {
+                        banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                        interstitial: 'ca-app-pub-8665007420370986/1255276555'
+                    };
+                } else { // for windows phone
+                    admobid = {
+                        banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                        interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                    };
+                }
+                window.AdMob.createBanner({
+                    adId: admobid.banner,
+                    position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                    autoShow: true,
+                });
 
-            var ref = new Firebase('https://mindletter-e953e.firebaseio.com');
-            var minutes = 1000 * 60;
-            var hours = minutes * 60;
+                // show the interstitial later, e.g. at end of game level
+                if ($rootScope.admob_interstitial_count.chat_visit == true
+                    && $rootScope.admob_interstitial_count.album_visit == true) {
 
-            var sync = $firebase(ref.child('chat').child($scope.hash_tag).orderByChild("created_at").startAt(Date.now() - (12 * hours)));
 
-            $scope.chats = sync.$asArray();
 
-            $scope.my_api_token = LoginData.get().api_token;
-            $scope.my_user_name = LoginData.get().name;
+                } else if ($rootScope.admob_interstitial_count.chat_visit == false
+                    && $rootScope.admob_interstitial_count.album_visit == false) {
+                    $rootScope.admob_interstitial_count = {
+                        'album_visit': true,
+                        'chat_visit': true
+                    };
+                } else {
+                    $rootScope.admob_interstitial_count.chat_visit = false;
+                }
+                console.log('album_visit2 = ' + $rootScope.admob_interstitial_count.album_visit)
+                console.log('chatvisit2 = ' + $rootScope.admob_interstitial_count.chat_visit)
+
+            }
         });
+
+        //
+        // $scope.$on('$ionicView.loaded', function (scopes, states) {
+        //
+        //
+        //     $scope.titleName = ListData.get_tag();
+        //     $scope.hash_tag = ListData.get_tag();
+        //
+        //     var ref = new Firebase('https://mindletter-e953e.firebaseio.com');
+        //     var minutes = 1000 * 60;
+        //     var hours = minutes * 60;
+        //
+        //     var sync = $firebase(ref.child('chat').child($scope.hash_tag).orderByChild("created_at").startAt(Date.now() - (12 * hours)));
+        //
+        //     $scope.chats = sync.$asArray();
+        //
+        //     $scope.my_api_token = LoginData.get().api_token;
+        //     $scope.my_user_name = LoginData.get().name;
+        // });
 
         // (3-3) 수신된 메시지 처리
         // app.Event.listen($scope.hash_tag, function (msg) {

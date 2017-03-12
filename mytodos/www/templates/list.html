@@ -1,7 +1,12 @@
 <ion-view view-title="#{{titleName}}" ng-controller="ListCtrl">
     <ion-content>
 
+        <ion-refresher
+                pulling-text="새로고침"
+                on-refresh="loadNew()">
+        </ion-refresher>
 
+        
         <div class="list list-inset">
             <label class="item item-input">
                 <i class="icon ion-pound placeholder-icon"></i>

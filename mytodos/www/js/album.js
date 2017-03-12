@@ -2,6 +2,31 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     .controller('AlbumCtrl', function ($scope, ListData, $stateParams, $location, $http, $ionicNavBarDelegate, $rootScope) {
         console.log($location.url());
 
+        $scope.$on('$ionicView.loaded', function (scopes, states) {
+            console.log('album_visit1 = ' + $rootScope.admob_interstitial_count.album_visit)
+            console.log('chatvisit1 = ' + $rootScope.admob_interstitial_count.chat_visit)
+
+            // show the interstitial later, e.g. at end of game level
+            if ($rootScope.admob_interstitial_count.chat_visit == true
+                && $rootScope.admob_interstitial_count.album_visit == true) {
+
+                if (window.AdMob) window.AdMob.showInterstitial();
+
+                $rootScope.admob_interstitial_count.album_visit = false;
+            } else if ($rootScope.admob_interstitial_count.chat_visit == false
+                && $rootScope.admob_interstitial_count.album_visit == false) {
+                $rootScope.admob_interstitial_count = {
+                    'album_visit': true,
+                    'chat_visit': true
+                };
+            } else {
+                $rootScope.admob_interstitial_count.album_visit = false;
+            }
+
+            console.log('album_visit = ' + $rootScope.admob_interstitial_count.album_visit)
+            console.log('chatvisit = ' + $rootScope.admob_interstitial_count.chat_visit)
+        });
+
         $ionicNavBarDelegate.showBackButton(false);
 
         var tag = ListData.get_tag();

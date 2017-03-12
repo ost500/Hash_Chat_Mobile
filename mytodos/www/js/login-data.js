@@ -31,14 +31,7 @@ angular.module('mytodos.login-data', [])
 
                 login_data = login;
                 login_data.loggedin = 1;
-                console.log("AAAAAAAAAAAAAAAAAAAAA");
-                console.log(login_data);
-                console.log("BBBBBBBBBBBBBBBBBBBBBB");
-
                 saveToStorage();
-
-                console.log(login_data);
-                console.log("BBBBBBBBBBBBBBBBBBBBBB");
 
             },
             edit: function(login){

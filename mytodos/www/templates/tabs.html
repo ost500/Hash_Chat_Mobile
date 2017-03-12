@@ -1,5 +1,5 @@
 
-<ion-tabs ng-controller="SettingCtrl" class="tabs-striped tabs-color-positive">
+<ion-tabs ng-controller="TabCtrl" class="tabs-striped tabs-color-positive">
 
     <ion-tab icon="ion-search" on-select="onTabSelected()"
              on-deselect="onTabDeselected()" href="#/tab/list">
@@ -33,7 +33,9 @@
 
     </ion-tab>
 
-
+    <button ng-if="network" class="button button-full button-stable">
+        네트워크 연결이 끊어졌습니다
+    </button>
 
 
 

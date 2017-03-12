@@ -3,24 +3,40 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
 
         var tag = ListData.get_tag();
+
+        $scope.loadNew = function () {
+
+            $http.get('http://52.78.208.21/api/hashtag?tag=' + ListData.get_tag())
+                .success(function (response) {
+                    console.log(response);
+
+                    $scope.hashtags = response;
+
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
+
+            $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag)
+                .success(function (response) {
+
+
+                    $scope.picture.addr = response.picture;
+                    console.log($scope.picture);
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
+
+
+        };
+
+        if ($scope.hashtags == null) {
+            $scope.loadNew();
+        }
+
+
+        $scope.loadNew();
+
+
+
         $scope.hashtags = "";
-
-        $http.get('http://52.78.208.21/api/hashtag?tag=' + ListData.get_tag())
-            .success(function (response) {
-                console.log(response);
-
-                $scope.hashtags = response;
-
-            });
-
-        $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag)
-            .success(function (response) {
-
-
-                $scope.picture.addr = response.picture;
-                console.log($scope.picture);
-
-            });
 
 
         $scope.search = false;
