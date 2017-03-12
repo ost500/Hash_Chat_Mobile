@@ -23,7 +23,7 @@
                 <input type="text" ng-model="profile_data.email">
             </label>
 
-            <label class="item item-input item-stacked-label">
+            <label ng-if="profile_data.loggedin" class="item item-input item-stacked-label">
                 <span class="input-label">프로필 사진</span>
                 <br>
                 <button class="button icon-left ion-camera" ng-click="loadImage()">사진 등록</button>
