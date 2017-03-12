@@ -6,7 +6,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
         $scope.loadNew = function () {
 
-            $http.get('http://52.78.208.21/api/hashtag?tag=' + ListData.get_tag())
+            $http.get('http://13.124.56.52/api/hashtag?tag=' + ListData.get_tag())
                 .success(function (response) {
                     console.log(response);
 
@@ -15,7 +15,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
                     $scope.$broadcast('scroll.refreshComplete');
                 });
 
-            $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag)
+            $http.get('http://13.124.56.52/api/hash_tag_picture?tag=' + tag)
                 .success(function (response) {
 
 
@@ -58,7 +58,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
             if ($scope.search_text.text == "") {
                 $scope.search = false;
 
-                $http.get('http://52.78.208.21/api/hashtag?tag=' + ListData.get_tag())
+                $http.get('http://13.124.56.52/api/hashtag?tag=' + ListData.get_tag())
                     .success(function (response) {
                         console.log(response);
 
@@ -71,7 +71,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
             $scope.search = true;
 
-            $http.get('http://52.78.208.21/api/hashtag?tag=' + $scope.search_text.text)
+            $http.get('http://13.124.56.52/api/hashtag?tag=' + $scope.search_text.text)
                 .success(function (response) {
                     console.log(response);
 
@@ -86,7 +86,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
             ListData.set_tag(newTag);
             $scope.titleName = newTag;
 
-            $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + newTag)
+            $http.get('http://13.124.56.52/api/hash_tag_picture?tag=' + newTag)
                 .success(function (response) {
 
 

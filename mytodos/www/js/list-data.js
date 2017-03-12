@@ -29,7 +29,7 @@ angular.module('mytodos.list-data', [])
 
 
             get_tag_picture: function () {
-                $http.get('http://52.78.208.21/api/hash_tag_picture?tag=' + tag )
+                $http.get('http://13.124.56.52/api/hash_tag_picture?tag=' + tag )
                     .success(function (response) {
 
                         console.log(response);

@@ -6,7 +6,7 @@ angular.module('mytodos.register', ['mytodos.login-data'])
 
         $scope.register = function () {
             console.log($scope.register_info);
-            $http.post('http://52.78.208.21/api/register', $scope.register_info)
+            $http.post('http://13.124.56.52/api/register', $scope.register_info)
                 .success(function (response) {
 
 

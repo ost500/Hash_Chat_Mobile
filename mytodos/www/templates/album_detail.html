@@ -11,7 +11,7 @@
 
                 <div class="item item-avatar">
 
-                    <img src="{{'http://52.78.208.21/'+post.users.picture}}">
+                    <img src="{{'http://13.124.56.52/'+post.users.picture}}">
                     <button ng-click="destroy()" ng-if="mine" style="color:#ef473a; float:right" class="ion-minus-circled button icon button-icon ng-binding">
                     </button>
                     <h2>{{ post.users.name }}</h2>
@@ -26,7 +26,7 @@
 
 
             <div class="item item-body">
-                <img class="full-image" ng-src="{{'http://52.78.208.21/'+post.picture}}">
+                <img class="full-image" ng-src="{{'http://13.124.56.52/'+post.picture}}">
                 <p>
                     {{ post.message }}
                 </p>
@@ -47,7 +47,7 @@
             <div class="item item-input-inset item-avatar">
 
 
-                <img ng-src="{{'http://52.78.208.21/' + profile_data.picture}}">
+                <img ng-src="{{'http://13.124.56.52/' + profile_data.picture}}">
                 <label style="margin-left:15%" class="item-input-wrapper">
                     <input ng-model="commentInput.data" style="width:100%" type="text" placeholder="댓글">
                 </label>
@@ -61,7 +61,7 @@
                       can-swipe="listCanSwipe">
                 <ion-item class="item item-avatar" ng-repeat="comment in comments">
 
-                    <img ng-src="{{'http://52.78.208.21/' + comment.users.picture}}">
+                    <img ng-src="{{'http://13.124.56.52/' + comment.users.picture}}">
                     <h2>{{ comment.users.name}}</h2>
                     <p>{{ comment.users.email}}</p>
                     <h3 style="white-space: normal">{{ comment.message }}</h3>

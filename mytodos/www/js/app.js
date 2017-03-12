@@ -312,8 +312,8 @@ angular.module('mytodos',
         $scope.moreDataCanBeLoaded = true;
 
         function loadList(page, callback) {
-            console.log('http://52.78.208.21/api/my_posts?page=' + page);
-            $http.get('http://52.78.208.21/api/my_posts?page=' + page + '&api_token=' + login_data.api_token)
+            console.log('http://13.124.56.52/api/my_posts?page=' + page);
+            $http.get('http://13.124.56.52/api/my_posts?page=' + page + '&api_token=' + login_data.api_token)
                 .success(function (response) {
                     var posts = [];
                     if (response.length === 0) {

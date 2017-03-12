@@ -13,15 +13,15 @@
   "proxies":[
     {
       "path": "/api",
-      "proxyUrl": "http://52.78.208.21/"
+      "proxyUrl": "http://13.124.56.52/"
     },
     {
       "path": "/test_api",
       "proxyUrl": "http://hashchat.app/"
     },
     {
-      "path": "http://52.78.208.21/",
-      "proxyUrl": "http://52.78.208.21/"
+      "path": "http://13.124.56.52/",
+      "proxyUrl": "http://13.124.56.52/"
     }
   ]
 }

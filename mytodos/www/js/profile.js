@@ -42,7 +42,7 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                 }
             }
 
-            $http.post('http://52.78.208.21/api/edit_user?api_token=' + login_data.api_token
+            $http.post('http://13.124.56.52/api/edit_user?api_token=' + login_data.api_token
                 + "&name=" + $scope.profile_data.name
                 + "&email=" + $scope.profile_data.email
                 , {}, config)
@@ -173,7 +173,7 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
         $scope.uploadImage = function () {
             $scope.show();
             // Destination URL
-            var url = "http://52.78.208.21/api/edit_profile_picture" + '?api_token=' + LoginData.get().api_token;
+            var url = "http://13.124.56.52/api/edit_profile_picture" + '?api_token=' + LoginData.get().api_token;
 
 
             // File name only
