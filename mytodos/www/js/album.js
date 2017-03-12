@@ -115,8 +115,13 @@ angular.module('mytodos.album', ['mytodos.list-data'])
     })
 
 
-    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope, LoginData, $ionicPopup) {
-
+    .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope, LoginData, $ionicPopup, $ionicHistory) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            console.log(toState);
+            if (toState.url == '/album_detail') {
+                $scope.profile_data = LoginData.get();
+            }
+        });
 
         $scope.post = "";
         $scope.like = "";
@@ -306,7 +311,7 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                             {})
                             .success(function (response) {
 
-                                $location.path('/tab/album');
+                                $ionicHistory.goback();
 
                             }).error(function (response) {
 

@@ -4,7 +4,24 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                                          $ionicScrollDelegate, $http, LoginData,
                                          $ionicPopup, $ionicNavBarDelegate,
                                          $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
-                                         $cordovaDevice, $cordovaActionSheet, $ionicLoading) {
+                                         $cordovaDevice, $cordovaActionSheet, $ionicLoading,
+                                         $rootScope) {
+
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            console.log(toState);
+            if (toState.url == '/profile') {
+                var login_data = LoginData.get();
+                console.log(login_data);
+
+                $scope.profile_data = {};
+
+                $scope.profile_data.name = login_data.name;
+                $scope.profile_data.email = login_data.email;
+                $scope.profile_data.picture = login_data.picture;
+                $scope.profile_data.loggedin = login_data.loggedin;
+            }
+        });
 
 
         $ionicNavBarDelegate.showBackButton(true);
@@ -56,7 +73,6 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                     LoginData.edit(response);
 
 
-
                 })
                 .error(function (response) {
 
@@ -68,7 +84,7 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
 
 
             // LoginData.edit();
-            if($scope.new_image_there){
+            if ($scope.new_image_there) {
                 $scope.uploadImage();
             }
 
@@ -82,7 +98,6 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                 template: msg
             });
         };
-
 
 
         $scope.loadImage = function () {
@@ -213,9 +228,6 @@ angular.module('mytodos.profile', ['mytodos.login-data'])
                     });
 
                     LoginData.create(result.response);
-
-
-
 
 
                 }, function (error) {

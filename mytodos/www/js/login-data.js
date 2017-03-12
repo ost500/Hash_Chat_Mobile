@@ -36,7 +36,7 @@ angular.module('mytodos.login-data', [])
             },
             edit: function(login){
                 login_data = login;
-                login_data.loggedin = 1;
+
                 saveToStorage();
             },
 
@@ -45,7 +45,7 @@ angular.module('mytodos.login-data', [])
                 login_data.email = "Anonymouse@osteng.com";
                 login_data.api_token = Math.random().toString(36).substring(7);
                 login_data.loggedin = 0;
-                login_data.picture = "image/default.png";
+                login_data.picture = "profile_picture/default.png";
                 saveToStorage();
             },
             move: function (todo, fromIndex, toIndex) {

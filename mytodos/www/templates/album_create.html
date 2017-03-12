@@ -1,3 +1,4 @@
+<script src="../js/app.js"></script>
 <ion-view view-title="#{{titleName}}" ng-controller="AlbumDetailCtrl">
     <ion-content>
         <form id="postForm">
@@ -39,7 +40,7 @@
                         <textarea ng-model="create_data.hashtag" type="text" rows="1"></textarea>
                     </label>
                 </div>
-                <div class="item item-body">
+                <div style="margin-bottom: 50px" class="item item-body">
                     <button ng-click="uploadImage()" class="button button-full button-positive">
                         <i class="ion-compose"></i> 글쓰기
                     </button>

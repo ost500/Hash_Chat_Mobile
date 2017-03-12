@@ -274,7 +274,7 @@ angular.module('mytodos',
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             console.log(toState);
-            if (toState.url == '/chat') {
+            if (toState.url == '/setting') {
                 var login_data = LoginData.get();
                 $scope.name = login_data.name;
                 $scope.email = login_data.email;

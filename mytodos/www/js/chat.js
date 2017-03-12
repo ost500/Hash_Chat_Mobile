@@ -106,8 +106,13 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         });
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+
             console.log(toState);
             if (toState.url == '/chat') {
+                $scope.my_api_token = LoginData.get().api_token;
+                $scope.my_user_name = LoginData.get().name;
+
                 console.log('tab/chat came');
                 console.log('entered');
                 console.log('album_visit1 = ' + $rootScope.admob_interstitial_count.album_visit)
