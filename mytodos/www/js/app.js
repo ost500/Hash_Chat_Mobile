@@ -269,8 +269,18 @@ angular.module('mytodos',
     })
 
 
-    .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate, $http) {
+    .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate, $http, $rootScope) {
+        $ionicNavBarDelegate.showBackButton(true);
 
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            console.log(toState);
+            if (toState.url == '/chat') {
+                var login_data = LoginData.get();
+                $scope.name = login_data.name;
+                $scope.email = login_data.email;
+                $scope.picture = login_data.picture;
+            }
+        });
 
         var login_data = LoginData.get();
         $scope.name = login_data.name;
@@ -323,8 +333,8 @@ angular.module('mytodos',
                         console.log(data);
                         posts.push(data);
                     });
-                    callback(posts);
                     $scope.$broadcast('scroll.infiniteScrollComplete');
+                    callback(posts);
                 });
         }
 

@@ -1,7 +1,7 @@
 angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
 
-    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData, $rootScope, $cordovaAdMob, $cordovaMoPubAds) {
+    .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData, $rootScope) {
 
 
         console.log('this is it' + $rootScope.admob_interstitial_count.chat_visit);
@@ -10,18 +10,15 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         $scope.banner_margin = true;
 
         window.addEventListener('native.keyboardshow', function () {
-            console.log('banner margin');
-            $scope.banner_margin = false;
-            console.log($scope.banner_margin);
+            if (window.AdMob) {
+                window.AdMob.hideBanner();
+            }
         });
 
         window.addEventListener('native.keyboardhide', function () {
-            console.log('banner margin');
-            $scope.banner_margin = true;
-            console.log($scope.banner_margin);
-            $timeout(function () {
-                $ionicScrollDelegate.scrollBottom(true);
-            }, 300);
+            if (window.AdMob) {
+                window.AdMob.showBanner();
+            }
         });
 
 
