@@ -119,49 +119,15 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
                 console.log('chatvisit1 = ' + $rootScope.admob_interstitial_count.chat_visit)
 
                 if (window.AdMob) {
-                    window.AdMob.removeBanner();
+                    window.AdMob.hideBanner();
                 }
 
-                var admobid = {};
-                if (/(android)/i.test(navigator.userAgent)) { // for android & amazon-fireos
-                    admobid = {
-                        banner: 'ca-app-pub-8665007420370986/5422744557', // or DFP format "/6253334/dfp_example_ad"
-                        interstitial: 'ca-app-pub-8665007420370986/5766201359'
-                    };
-                } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
-                    admobid = {
-                        banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
-                        interstitial: 'ca-app-pub-8665007420370986/1255276555'
-                    };
-                } else { // for windows phone
-                    admobid = {
-                        banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
-                        interstitial: 'ca-app-pub-8665007420370986/5766201359'
-                    };
-                }
-                window.AdMob.createBanner({
-                    adId: admobid.banner,
-                    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-                    autoShow: true,
-                });
+                $timeout(function () {
+                    if (window.AdMob) {
+                        window.AdMob.showBanner();
+                    }
+                }, 1000);
 
-                // show the interstitial later, e.g. at end of game level
-                if ($rootScope.admob_interstitial_count.chat_visit == true
-                    && $rootScope.admob_interstitial_count.album_visit == true) {
-
-
-
-                } else if ($rootScope.admob_interstitial_count.chat_visit == false
-                    && $rootScope.admob_interstitial_count.album_visit == false) {
-                    $rootScope.admob_interstitial_count = {
-                        'album_visit': true,
-                        'chat_visit': true
-                    };
-                } else {
-                    $rootScope.admob_interstitial_count.chat_visit = false;
-                }
-                console.log('album_visit2 = ' + $rootScope.admob_interstitial_count.album_visit)
-                console.log('chatvisit2 = ' + $rootScope.admob_interstitial_count.chat_visit)
 
             }
         });
