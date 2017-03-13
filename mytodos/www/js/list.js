@@ -1,5 +1,5 @@
 angular.module('mytodos.list', ['mytodos.list-data'])
-    .controller('ListCtrl', function ($http, $scope, ListData, $ionicPopup) {
+    .controller('ListCtrl', function ($http, $scope, ListData, $ionicPopup, $location) {
 
 
         var tag = ListData.get_tag();
@@ -35,7 +35,6 @@ angular.module('mytodos.list', ['mytodos.list-data'])
         $scope.loadNew();
 
 
-
         $scope.hashtags = "";
 
 
@@ -58,7 +57,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
             if ($scope.search_text.text == "") {
                 $scope.search = false;
 
-                $http.get('http://13.124.56.52/api/hashtag?tag=' + ListData.get_tag())
+                $http.get('http://13.124.56.52/api/hashtag?tag=' + ListData.get_default_tag())
                     .success(function (response) {
                         console.log(response);
 
@@ -93,11 +92,18 @@ angular.module('mytodos.list', ['mytodos.list-data'])
                     $scope.picture.addr = response.picture;
                     console.log($scope.picture);
 
+                    $ionicPopup.alert({
+                        title: "#" + newTag,
+                        template: "해시태그를 변경했습니다"
+                    });
+                    $scope.search_text.text = "";
+
+                    $scope.search_change();
+
+                    $location.path('/tab/album');
+
                 });
-            $ionicPopup.alert({
-                title: "#" + newTag,
-                template: "해시태그를 변경했습니다"
-            });
+
         };
 
 

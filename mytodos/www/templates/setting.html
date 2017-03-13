@@ -35,6 +35,8 @@
 
                     <div class="item item-avatar">
                         <img ng-src="{{'http://13.124.56.52/'+post.users.picture}}">
+                        <button ng-click="destroy()" style="color:#ef473a; float:right" class="ion-minus-circled button icon button-icon ng-binding">
+                        </button>
                         <h2>{{post.users.name}}</h2>
                         <p>{{post.created_at}}</p>
                         <p>{{post.users.email}}</p>

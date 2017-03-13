@@ -269,7 +269,7 @@ angular.module('mytodos',
     })
 
 
-    .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate, $http, $rootScope) {
+    .controller('SettingCtrl', function ($scope, $location, LoginData, $ionicNavBarDelegate, $http, $rootScope, $ionicPopup) {
         $ionicNavBarDelegate.showBackButton(true);
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -363,6 +363,43 @@ angular.module('mytodos',
 
 
         };
+
+
+        $scope.destroy = function () {
+
+
+            $ionicPopup.confirm({
+                title: '삭제',
+                template: '삭제 하시겠습니까?',
+                buttons: [{ // Array[Object] (optional). Buttons to place in the popup footer.
+                    text: '삭제',
+                    type: 'button-positive',
+                    onTap: function (e) {
+                        $http.delete('http://13.124.56.52/api/posts/' + $stateParams.id + '?api_token=' + LoginData.get().api_token,
+                            {})
+                            .success(function (response) {
+
+                                $location.path('/tab/album');
+
+                            }).error(function (response) {
+
+                            $ionicPopup.alert({
+                                title: "에러",
+                                template: response
+                            });
+                        });
+                    }
+                }, {
+                    text: '취소',
+                    type: 'button-default',
+                    onTap: function (e) {
+
+                    }
+                }]
+            });
+
+
+        }
 
 
     })

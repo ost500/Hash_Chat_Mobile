@@ -3,6 +3,7 @@ angular.module('mytodos.list-data', [])
 
         var page = 1;
         posts = [];
+        var default_tag = '수원대학교';
         var tag = '수원대학교';
         $rootScope.url = 'api/';
 
@@ -23,13 +24,17 @@ angular.module('mytodos.list-data', [])
                 return tag;
             },
 
-            set_tag : function(newTag){
+            get_default_tag: function () {
+                return default_tag;
+            },
+
+            set_tag: function (newTag) {
                 tag = newTag;
             },
 
 
             get_tag_picture: function () {
-                $http.get('http://13.124.56.52/api/hash_tag_picture?tag=' + tag )
+                $http.get('http://13.124.56.52/api/hash_tag_picture?tag=' + tag)
                     .success(function (response) {
 
                         console.log(response);

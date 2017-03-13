@@ -93,10 +93,11 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
 
     .controller('AlbumDetailCtrl', function ($scope, $location, $stateParams, $http, $ionicNavBarDelegate, ListData, $rootScope, LoginData, $ionicPopup, $ionicHistory) {
+        $ionicNavBarDelegate.showBackButton(true);
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             console.log(toState);
             if (toState.url == '/album_detail') {
-                $scope.profile_data = LoginData.get();
+                $scope.profile_data = fLoginData.get();
             }
         });
 
