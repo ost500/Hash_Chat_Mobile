@@ -1,24 +1,24 @@
 angular.module('mytodos.login-data', [])
     .factory('LoginData', function () {
         var login_data = angular.fromJson(window.localStorage['login-user'] || '[]');
-        if(login_data.name == null){
-            login_data.name = "익명"+ Math.floor(Math.random() * (10000) +1);
+        if (login_data.name == null) {
+            login_data.name = "익명" + Math.floor(Math.random() * (10000) + 1);
         }
-        if(login_data.email == null){
+        if (login_data.email == null) {
             login_data.email = "Anonymouse@osteng.com";
         }
-        if(login_data.api_token == undefined){
+        if (login_data.api_token == undefined) {
             login_data.api_token = Math.random().toString(36).substring(7);
         }
-        if(login_data.loggedin == undefined){
+        if (login_data.loggedin == undefined) {
             login_data.loggedin = 0;
         }
-        if(login_data.picture == undefined){
+        if (login_data.picture == undefined) {
             login_data.picture = "profile_picture/default.png";
         }
 
         function saveToStorage(login_val) {
-            window.localStorage["login-user"]  = angular.toJson(login_data);
+            window.localStorage["login-user"] = angular.toJson(login_data);
         }
 
 
@@ -34,14 +34,14 @@ angular.module('mytodos.login-data', [])
                 saveToStorage();
 
             },
-            edit: function(login){
+            edit: function (login) {
                 login_data = login;
 
                 saveToStorage();
             },
 
             logout: function () {
-                login_data.name = "익명"+ Math.floor(Math.random() * (10000) +1);
+                login_data.name = "익명" + Math.floor(Math.random() * (10000) + 1);
                 login_data.email = "Anonymouse@osteng.com";
                 login_data.api_token = Math.random().toString(36).substring(7);
                 login_data.loggedin = 0;
@@ -52,6 +52,13 @@ angular.module('mytodos.login-data', [])
                 todos.splice(fromIndex, 1);
                 todos.splice(toIndex, 0, todo);
                 saveToStorage();
+            },
+            save_token: function (token) {
+                login_data.token = token;
+                saveToStorage();
+            },
+            get_token: function(){
+                return login_data.token;
             }
         }
     });

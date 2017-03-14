@@ -452,10 +452,13 @@ angular.module('mytodos',
                 autoShow: false
             });
 
-            $rootScope.admob_interstitial_count = {
-                'album_visit': false,
-                'chat_visit': false
-            };
+            window.FirebasePlugin.getToken(function (token) {
+                // save this server-side and use it to push notifications to this device
+                console.log("TOKEN!" + token);
+                LoginData.save_token(token);
+            }, function (error) {
+                console.error("TOKEN!Error" + error);
+            });
 
 
         });

@@ -4,7 +4,7 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
     .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData, $rootScope) {
 
 
-        console.log('this is it' + $rootScope.admob_interstitial_count.chat_visit);
+
 
 
         $scope.banner_margin = true;
@@ -110,13 +110,14 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
             console.log(toState);
             if (toState.url == '/chat') {
+                $scope.titleName = ListData.get_tag();
+
                 $scope.my_api_token = LoginData.get().api_token;
                 $scope.my_user_name = LoginData.get().name;
 
                 console.log('tab/chat came');
                 console.log('entered');
-                console.log('album_visit1 = ' + $rootScope.admob_interstitial_count.album_visit)
-                console.log('chatvisit1 = ' + $rootScope.admob_interstitial_count.chat_visit)
+
 
                 if (window.AdMob) {
                     window.AdMob.hideBanner();

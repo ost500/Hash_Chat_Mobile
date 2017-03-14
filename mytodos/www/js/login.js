@@ -1,12 +1,13 @@
 angular.module('mytodos.login', ['mytodos.login-data'])
     .controller('LoginOstCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $state, $location, $ionicNavBarDelegate) {
 
-        $scope.login_info = {email: "", password: ""};
+        $scope.login_info = {"email": "", "password": "", "token": LoginData.get_token()};
 
+        console.log("token!!!" + $scope.login_info);
 
         $scope.logIn = function () {
-            $http.post('/api/login?email=' + $scope.login_info.email
-                    + "&password=" + $scope.login_info.password, {})
+            console.log("token!!!" + $scope.login_info);
+            $http.post('/api/login', $scope.login_info)
                 .success(function (response) {
 
                     console.log("--------");
@@ -17,7 +18,7 @@ angular.module('mytodos.login', ['mytodos.login-data'])
 
                 })
                 .error(function (response) {
-                       console.log(response);
+                    console.log(response);
                     $ionicPopup.alert({
                         title: "로그인 에러",
                         template: "이메일과 비밀번호를 다시 확인해 주세요"
