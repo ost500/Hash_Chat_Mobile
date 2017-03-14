@@ -188,15 +188,15 @@ angular.module('mytodos',
                 position: AdMob.AD_POSITION.BOTTOM_CENTER,
                 autoShow: true
             });
-
-            // preppare and load ad resource in background, e.g. at begining of game level
-            if (window.AdMob) window.AdMob.prepareInterstitial({
-                adId: admobid.interstitial,
-                autoShow: true
-            });
+            //
+            // // preppare and load ad resource in background, e.g. at begining of game level
+            // if (window.AdMob) window.AdMob.prepareInterstitial({
+            //     adId: admobid.interstitial,
+            //     autoShow: true
+            // });
 
             // show the interstitial later, e.g. at end of game level
-            if (window.AdMob) window.AdMob.showInterstitial();
+            // if (window.AdMob) window.AdMob.showInterstitial();
 
 
         }, true);
@@ -447,10 +447,10 @@ angular.module('mytodos',
             });
 
             // preppare and load ad resource in background, e.g. at begining of game level
-            if (window.AdMob) window.AdMob.prepareInterstitial({
-                adId: admobid.interstitial,
-                autoShow: false
-            });
+            // if (window.AdMob) window.AdMob.prepareInterstitial({
+            //     adId: admobid.interstitial,
+            //     autoShow: false
+            // });
 
             window.FirebasePlugin.getToken(function (token) {
                 // save this server-side and use it to push notifications to this device
