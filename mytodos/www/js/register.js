@@ -1,11 +1,18 @@
 angular.module('mytodos.register', ['mytodos.login-data'])
     .controller('RegisterCtrl', function ($scope, $timeout, $ionicPopup, $http, LoginData, $state, $ionicHistory) {
 
-        $scope.register_info = {name: "", email: "", password: "", password_confirmation:""};
+        $scope.register_info = {
+            name: "",
+            email: "",
+            password: "",
+            password_confirmation: "",
+            token: LoginData.get_token()
+        };
 
 
         $scope.register = function () {
             console.log($scope.register_info);
+            $scope.register_info.token = LoginData.get_token();
             $http.post('http://13.124.56.52/api/register', $scope.register_info)
                 .success(function (response) {
 
@@ -14,7 +21,7 @@ angular.module('mytodos.register', ['mytodos.login-data'])
                     console.log(response);
                     $ionicHistory.clearCache();
                     $scope.register_info = null;
-                    $state.go('tab.setting',{},{reload:true});
+                    $state.go('tab.setting', {}, {reload: true});
 
                 })
                 .error(function (response) {

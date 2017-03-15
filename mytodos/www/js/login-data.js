@@ -16,6 +16,9 @@ angular.module('mytodos.login-data', [])
         if (login_data.picture == undefined) {
             login_data.picture = "profile_picture/default.png";
         }
+        if (login_data.token == undefined) {
+            login_data.token = "";
+        }
 
         function saveToStorage(login_val) {
             window.localStorage["login-user"] = angular.toJson(login_data);
@@ -57,7 +60,7 @@ angular.module('mytodos.login-data', [])
                 login_data.token = token;
                 saveToStorage();
             },
-            get_token: function(){
+            get_token: function () {
                 return login_data.token;
             }
         }

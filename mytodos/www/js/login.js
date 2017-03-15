@@ -3,11 +3,12 @@ angular.module('mytodos.login', ['mytodos.login-data'])
 
         $scope.login_info = {"email": "", "password": "", "token": LoginData.get_token()};
 
-        console.log("token!!!" + $scope.login_info);
+        console.log($scope.login_info);
 
         $scope.logIn = function () {
             console.log("token!!!" + $scope.login_info);
-            $http.post('/api/login', $scope.login_info)
+            $scope.login_info.token = LoginData.get_token();
+            $http.post('http://13.124.56.52/login', $scope.login_info)
                 .success(function (response) {
 
                     console.log("--------");
