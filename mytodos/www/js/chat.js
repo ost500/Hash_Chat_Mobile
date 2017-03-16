@@ -6,6 +6,12 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
         $scope.banner_margin = true;
 
+
+
+        $scope.ios = /(ipod|iphone|ipad)/i.test(navigator.userAgent);
+
+
+
         window.addEventListener('native.keyboardshow', function () {
             if (AdMob) {
                 AdMob.removeBanner();

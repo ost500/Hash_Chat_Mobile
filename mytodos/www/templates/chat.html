@@ -42,7 +42,33 @@
 
 
 
-    <ion-footer-bar class="bar-stable item-input-inset">
+    <ion-footer-bar ng-if="ios" keyboard-attach class="bar-stable item-input-inset">
+
+        <form style="width:100%; height:100%" ng-submit="sendMessage()">
+            <div style="margin:0; padding:0" class="row">
+                <div style="margin:0; padding:0" class="col col-80">
+                    <label class="item-input-wrapper">
+
+                        <input type="text" ng-return="closeKeyboard()" ng-click="inputUp()"
+                               ng-model="data.message" ng-focus="inputUp()" ng-blur="inputDown()" value=""
+                               placeholder="">
+                        </input>
+                    </label>
+                </div>
+
+                <!--<textarea ng-model="data.message" value="" placeholder="Send {{toUser.username}} a message..." required-->
+                <!--minlength="1" maxlength="1500" msd-elastic></textarea>-->
+
+                <div style="margin:0; padding:0; text-align: center; margin-top:-4px;" class="col">
+                    <button ng-class="{disabled: sending}" class="button button-clear" for="submit">
+                        전송
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </ion-footer-bar>
+    <ion-footer-bar ng-if="!ios" class="bar-stable item-input-inset">
 
         <form style="width:100%; height:100%" ng-submit="sendMessage()">
             <div style="margin:0; padding:0" class="row">

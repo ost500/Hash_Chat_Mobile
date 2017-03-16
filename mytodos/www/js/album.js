@@ -325,15 +325,14 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
         $ionicNavBarDelegate.showBackButton(true);
 
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+
 
         var login_data = LoginData.get();
         console.log(login_data);
         $scope.$on('$ionicView.enter', function () {
             $scope.profile_data = LoginData.get();
-        });
 
-
-        $scope.$on('$ionicView.enter', function () {
             tag = ListData.get_tag();
 
             $scope.create_data = {
@@ -341,6 +340,12 @@ angular.module('mytodos.album', ['mytodos.list-data'])
                 hashtag: "#" + tag,
                 picture: ""
             };
+            default_tag = ListData.get_default_tag();
+
+            if (tag != default_tag) {
+                $scope.create_data.hashtag = default_tag + "#" + $scope.create_data.hashtag;
+            }
+
         });
 
         $scope.create_data = {
