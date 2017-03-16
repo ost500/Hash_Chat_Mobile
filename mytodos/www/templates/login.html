@@ -1,9 +1,13 @@
+<script src="../js/app.js"></script>
 <ion-view view-title="로그인" ng-controller="LoginCtrl">
-
 
 
     <ion-content>
         <div class="list">
+            <a class="item item-icon-left" ng-click="fb_login()">
+                <i class="icon ion-social-facebook"></i>
+                페이스북 로그인
+            </a>
             <a class="item item-icon-left" href="#/tab/login_osteng">
                 <i class="icon ion-person"></i>
                 로그인
@@ -16,29 +20,51 @@
             <a class="item item-icon-left" href="#/tab/register">
                 <i class="icon ion-person-add"></i>
                 회원가입
-           </a>
+            </a>
 
 
             <!--<a class="item item-icon-left" ng-click="notready('인스타그램')">-->
-                <!--<i class="icon ion-social-instagram"></i>-->
-                <!--인스타그램 로그인-->
+            <!--<i class="icon ion-social-instagram"></i>-->
+            <!--인스타그램 로그인-->
 
             <!--</a>-->
 
             <!--<a class="item item-icon-left" ng-click="notready('페이스북')">-->
-                <!--<i class="icon ion-social-facebook"></i>-->
-                <!--페이스북 로그인-->
+            <!--<i class="icon ion-social-facebook"></i>-->
+            <!--페이스북 로그인-->
 
             <!--</a>-->
 
             <!--<a class="item item-icon-left" ng-click="notready('네이버')">-->
-                <!--<i class="icon ion-person-stalker"></i>-->
-                <!--네이버 로그인-->
+            <!--<i class="icon ion-person-stalker"></i>-->
+            <!--네이버 로그인-->
 
             <!--</a>-->
 
         </div>
     </ion-content>
 
+    <script>
+
+        function fb_login() {
+            window.CordovaFacebook.login({
+                permissions: ['email', 'user_likes'],
+                onSuccess: function(result) {
+                    if(result.declined.length > 0) {
+                        alert("The User declined something!");
+                    }
+                    /* ... */
+                },
+                onFailure: function(result) {
+                    if(result.cancelled) {
+                        alert("The user doesn't like my app");
+                    } else if(result.error) {
+                        alert("There was an error:" + result.errorLocalized);
+                    }
+                }
+            });
+        }
+
+    </script>
 
 </ion-view>

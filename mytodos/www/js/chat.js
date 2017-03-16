@@ -4,21 +4,46 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
     .controller('ChatCtrl', function ($scope, $timeout, $ionicScrollDelegate, $http, LoginData, $location, $firebase, ListData, $rootScope) {
 
 
-
-
-
         $scope.banner_margin = true;
 
         window.addEventListener('native.keyboardshow', function () {
-            if (window.AdMob) {
-                window.AdMob.hideBanner();
+            if (AdMob) {
+                AdMob.removeBanner();
             }
+
         });
 
         window.addEventListener('native.keyboardhide', function () {
-            if (window.AdMob) {
-                window.AdMob.showBanner();
+
+
+            var admobid = {};
+            if (/(android)/i.test(navigator.userAgent)) { // for android & amazon-fireos
+                admobid = {
+                    banner: 'ca-app-pub-8665007420370986/5422744557', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                };
+            } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+                admobid = {
+                    banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-8665007420370986/1255276555'
+                };
+            } else { // for windows phone
+                admobid = {
+                    banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                };
             }
+
+            console.log(admobid);
+
+            if (AdMob) AdMob.createBanner({
+                adId: admobid.banner,
+                position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                autoShow: true,
+            });
+            $ionicScrollDelegate.scrollBottom(true);
+
+
         });
 
 
@@ -119,15 +144,37 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
                 console.log('entered');
 
 
-                if (window.AdMob) {
-                    window.AdMob.hideBanner();
+                if (AdMob) {
+                    AdMob.removeBanner();
                 }
 
+
+                var admobid = {};
+
+                if (/(android)/i.test(navigator.userAgent)) { // for android & amazon-fireos
+                    admobid = {
+                        banner: 'ca-app-pub-8665007420370986/5422744557', // or DFP format "/6253334/dfp_example_ad"
+                        interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                    };
+                } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+                    admobid = {
+                        banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                        interstitial: 'ca-app-pub-8665007420370986/1255276555'
+                    };
+                } else { // for windows phone
+                    admobid = {
+                        banner: 'ca-app-pub-8665007420370986/2469278151', // or DFP format "/6253334/dfp_example_ad"
+                        interstitial: 'ca-app-pub-8665007420370986/5766201359'
+                    };
+                }
+                console.log(admobid);
                 $timeout(function () {
-                    if (window.AdMob) {
-                        window.AdMob.showBanner();
-                    }
-                }, 1000);
+                    if (AdMob) AdMob.createBanner({
+                        adId: admobid.banner,
+                        position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                        autoShow: true,
+                    });
+                }, 300);
 
 
             }

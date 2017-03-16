@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('mytodos',
     ['ionic', 'mytodos.chat', 'mytodos.login', 'mytodos.register', 'mytodos.profile',
-        'mytodos.list', 'mytodos.album', 'firebase', 'ngCordova'])
+        'mytodos.list', 'mytodos.album', 'firebase', 'ngCordova', 'ngOpenFB'])
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
@@ -202,12 +202,79 @@ angular.module('mytodos',
         }, true);
 
     })
-    .controller('LoginCtrl', function ($scope, $location, $ionicHistory, $ionicPopup, $ionicNavBarDelegate) {
+    .controller('LoginCtrl', function ($http, $state, $scope, $location, $ionicHistory, $ionicPopup, $ionicNavBarDelegate, LoginData) {
         $scope.myGoBack = function () {
             console.log("go back");
             $ionicHistory.goBack();
         };
         $ionicNavBarDelegate.showBackButton(true);
+
+        $scope.fb_login = function () {
+
+            var userID;
+
+            var fbLoginSuccess = function (userData) {
+                console.log("UserInfo: ", userData);
+                console.log(userData);
+                userID = userData.authResponse.userID;
+                console.log(userData.authResponse.userID);
+                window.facebookConnectPlugin.api("me?fields=picture.type(large),name,email", [], function (profile) {
+                    console.log("this is profile");
+                    console.log(profile);
+
+
+                    $scope.register_info = {
+                        name: profile.name,
+                        email: profile.email,
+                        password: "facebook",
+                        password_confirmation: "facebook",
+                        token: LoginData.get_token(),
+                        picture: profile.picture.data.url
+                    };
+
+
+                    $http.post('http://13.124.56.52/api/facebookLogin', $scope.register_info)
+                        .success(function (response) {
+
+
+                            LoginData.create(response);
+                            console.log(response);
+                            $ionicHistory.clearCache();
+                            $scope.register_info = null;
+                            $state.go('tab.setting', {}, {reload: true});
+
+                        })
+                        .error(function (response) {
+                            console.log(response);
+                            $ionicPopup.alert({
+                                title: "회원가입 에러",
+                                template: "회원가입 정보를 다시 확인해 주세요"
+                            });
+                        });
+
+
+                }, function (error) {
+
+                    $ionicPopup.alert({
+                        title: "에러가 발생했습니다",
+                        template: error
+                    });
+
+                });
+
+            }
+
+            window.facebookConnectPlugin.login(["public_profile", "email", "user_photos"], fbLoginSuccess,
+                function loginError(error) {
+                    $ionicPopup.alert({
+                        title: "에러가 발생했습니다",
+                        template: error
+                    });
+                }
+            );
+
+
+        };
 
         $scope.notready = function (social) {
             console.log('not raedy');
@@ -405,8 +472,10 @@ angular.module('mytodos',
     })
 
 
-    .run(function ($ionicPlatform, $rootScope) {
+    .run(function ($ionicPlatform, LoginData, ngFB) {
         $ionicPlatform.ready(function () {
+
+
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
