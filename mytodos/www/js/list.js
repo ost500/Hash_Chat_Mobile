@@ -94,7 +94,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
                     $ionicPopup.alert({
                         title: "#" + newTag,
-                        template: "해시태그를 변경했습니다"
+                        template: "<img style=\'width:100%\' src=http://13.124.56.52" + $scope.picture.addr + '>'
                     });
                     $scope.search_text.text = "";
 
