@@ -1,11 +1,38 @@
 angular.module('mytodos.album', ['mytodos.list-data'])
     .controller('AlbumCtrl', function ($scope, ListData, $stateParams, $location, $http, $ionicNavBarDelegate, $rootScope) {
-        console.log($location.url());
 
+        if ($scope.newspeed == null) {
+            $scope.newspeed = 'posts';
+        }
 
+        $scope.newspeed_change = function (type) {
+            console.log('newspeedchange');
+            console.log(type);
+            $rootScope.page = 1;
+            $scope.newspeed = type;
+            $scope.loadNew();
+        };
         $ionicNavBarDelegate.showBackButton(false);
 
+
         var tag = ListData.get_tag();
+
+
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+
+            console.log(toState);
+            if (toState.url == '/album') {
+
+
+                if (tag != ListData.get_tag()) {
+                    $rootScope.page = 1;
+                    $scope.loadNew();
+                }
+            }
+        });
+
 
         $scope.titleName = tag;
 
@@ -22,9 +49,8 @@ angular.module('mytodos.album', ['mytodos.list-data'])
 
             $scope.titleName = tag;
 
-            console.log(tag);
-            console.log('http://13.124.56.52/api/my_posts?page=' + page);
-            $http.get('http://13.124.56.52/api/posts?tag=' + tag + '&page=' + page)
+            console.log('http://13.124.56.52/api/' + $scope.newspeed + '?tag=' + tag + '&page=' + page);
+            $http.get('http://13.124.56.52/api/' + $scope.newspeed + '?tag=' + tag + '&page=' + page)
                 .success(function (response) {
                     var posts = [];
                     if (response.length === 0) {

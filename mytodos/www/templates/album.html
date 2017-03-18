@@ -1,4 +1,4 @@
-
+<script src="../js/list.js"></script>
 <ion-view cache-view="false" view-title="#{{titleName}}" ng-controller="AlbumCtrl">
 
     <ion-content>
@@ -9,8 +9,25 @@
 
         <div class="list">
 
+
+            <ion-list>
+                <div class="row">
+                    <div class="col">
+                        <ion-radio ng-change="newspeed_change('posts')" ng-model="newspeed" ng-value="'posts'"><i class="ion-paper-airplane"></i>   뉴스피드 편지</ion-radio>
+                    </div>
+                    <div class="col">
+                        <ion-radio ng-change="newspeed_change('weeklybest')" ng-model="newspeed" ng-value="'weeklybest'"><i class="ion-thumbsup"></i>   주간베스트 편지</ion-radio>
+                    </div>
+                    <div class="col">
+                        <ion-radio ng-change="newspeed_change('monthlybest')" ng-model="newspeed" ng-value="'monthlybest'"><i class="ion-trophy"></i>   월간베스트 편지</ion-radio>
+                    </div>
+                </div>
+
+
+            </ion-list>
+
             <button ng-click="write()" class="button button-full button-stable">
-                <i class="ion-compose"></i> 글쓰기
+                <i class="ion-compose"></i> 마음의 편지 쓰기
             </button>
 
             <div ng-click="album_detail(post.id)" class="card" ng-repeat="post in posts">
