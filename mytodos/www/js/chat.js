@@ -7,9 +7,7 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         $scope.banner_margin = true;
 
 
-
         $scope.ios = /(ipod|iphone|ipad)/i.test(navigator.userAgent);
-
 
 
         window.addEventListener('native.keyboardshow', function () {
@@ -54,16 +52,17 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
 
         var ref;
+        var sync;
 
         $scope.loadNew = function () {
             $scope.titleName = ListData.get_tag();
             $scope.hash_tag = ListData.get_tag();
 
-            var ref = new Firebase('https://mindletter-e953e.firebaseio.com');
+            ref = new Firebase('https://mindletter-e953e.firebaseio.com');
             var minutes = 1000 * 60;
             var hours = minutes * 60;
 
-            var sync = $firebase(ref.child('chat').child($scope.hash_tag).orderByChild("created_at").startAt(Date.now() - (12 * hours)));
+            sync = $firebase(ref.child('chat').child($scope.hash_tag).orderByChild("created_at").startAt(Date.now() - (12 * hours)));
 
             $scope.chats = sync.$asArray();
 
@@ -141,6 +140,14 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
 
             console.log(toState);
             if (toState.url == '/chat') {
+
+
+                if ($scope.hash_tag != ListData.get_tag()) {
+                    $scope.hash_tag = ListData.get_tag();
+                    $scope.loadNew();
+                }
+
+
                 $scope.titleName = ListData.get_tag();
 
                 $scope.my_api_token = LoginData.get().api_token;
@@ -241,10 +248,14 @@ angular.module('mytodos.chat', ['mytodos.login-data', 'firebase'])
         };
 
         $scope.inputDown = function () {
-
             console.log($location.url());
             if ($location.url() == '/tab/chat') {
+
                 $timeout(function () {
+                    //메세지 날리고 다른화면으로 갔을 때 스크롤 내려가는 것 방지
+                    if ($location.url() != '/tab/chat') {
+                        return;
+                    }
                     $ionicScrollDelegate.scrollBottom(true);
 
                 }, 300);

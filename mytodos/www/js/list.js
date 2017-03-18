@@ -59,7 +59,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
                 $http.get('http://13.124.56.52/api/hashtag?tag=' + ListData.get_default_tag())
                     .success(function (response) {
-                        console.log(response);
+
 
                         $scope.hashtags = response;
 
@@ -72,7 +72,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
             $http.get('http://13.124.56.52/api/hashtag?tag=' + $scope.search_text.text)
                 .success(function (response) {
-                    console.log(response);
+
 
                     $scope.hashtags = response;
                 });
@@ -95,6 +95,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
                     $ionicPopup.alert({
                         title: "#" + newTag,
                         template: "<img style=\'width:100%\' src=http://13.124.56.52" + $scope.picture.addr + '>'
+                        + '<br>해시태그를 변경 했습니다'
                     });
                     $scope.search_text.text = "";
 
