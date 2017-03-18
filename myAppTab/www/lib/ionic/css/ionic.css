@@ -5994,7 +5994,7 @@ button.item.item-complex {
 .item-radio .item-content {
   position: relative;
   z-index: 2;
-  padding: 16px 49px 16px 16px;
+  padding: 16px 49px 16px 5px;
   border: none;
   background-color: #fff; }
 
@@ -8274,7 +8274,7 @@ input:checked + .checkbox-icon:after {
 
 .item-radio .item-content {
   /* give some room to the right for the checkmark icon */
-  padding-right: 64px; }
+  padding-right: 30px; }
 
 .item-radio .radio-icon {
   /* checkmark icon will be hidden by default */
@@ -8283,7 +8283,9 @@ input:checked + .checkbox-icon:after {
   right: 0;
   z-index: 3;
   visibility: hidden;
-  padding: 14px;
+  padding-top: 14px;
+  padding-right: 5px;
+  padding-left: 2px;
   height: 100%;
   font-size: 24px; }
 
