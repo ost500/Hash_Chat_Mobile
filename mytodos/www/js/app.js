@@ -472,7 +472,7 @@ angular.module('mytodos',
     })
 
 
-    .run(function ($ionicPlatform, LoginData, ngFB) {
+    .run(function ($ionicPlatform, LoginData, $http) {
         $ionicPlatform.ready(function () {
 
 
@@ -521,12 +521,18 @@ angular.module('mytodos',
             //     autoShow: false
             // });
 
-            window.FirebasePlugin.getToken(function (token) {
-                // save this server-side and use it to push notifications to this device
-                console.log("TOKEN!" + token);
+            FCMPlugin.getToken(function (token) {
                 LoginData.save_token(token);
-            }, function (error) {
-                console.error("TOKEN!Error" + error);
+                console.log('tototoken' + token);
+                $http.post('http://13.124.56.52/api/everytoken', {"token": token})
+                    .success(function (response) {
+                        console.log("good");
+                        console.log(response);
+
+                    })
+                    .error(function (response) {
+                        console.log(response);
+                    });
             });
 
 

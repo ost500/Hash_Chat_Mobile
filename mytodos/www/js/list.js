@@ -8,7 +8,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
             $http.get('http://13.124.56.52/api/hashtag?tag=' + ListData.get_tag())
                 .success(function (response) {
-                    console.log(response);
+
 
                     $scope.hashtags = response;
 
@@ -20,7 +20,7 @@ angular.module('mytodos.list', ['mytodos.list-data'])
 
 
                     $scope.picture.addr = response.picture;
-                    console.log($scope.picture);
+
                     $scope.$broadcast('scroll.refreshComplete');
                 });
 
